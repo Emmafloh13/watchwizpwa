@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 
 class RegistroEmpresa(models.Model):
     ID_registro = models.AutoField(primary_key=True)  
@@ -14,5 +13,3 @@ class RegistroEmpresa(models.Model):
 
     def __str__(self):
         return self.Nombre_empre
-
-

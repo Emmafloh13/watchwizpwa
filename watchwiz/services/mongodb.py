@@ -7,7 +7,4 @@ db = client['Watchwiz']  # Nombre de la base de datos
 coleccion = db['registro_empres']  # Nombre de la colección
 
 def get_collection(registro_empres):
-    """
-    Función para obtener una colección de la base de datos.
-    """
     return db[registro_empres]

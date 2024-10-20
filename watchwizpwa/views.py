@@ -3,14 +3,18 @@ from django.db import DatabaseError
 from django.shortcuts import render, redirect
 from watchwiz.forms import RegistroEmpresaForm
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.hashers import check_password
+from watchwiz.mongo_client import registro_empresa_collection
+
 
 def registro(request):
     if request.method == 'POST':
+        #Se inicia el formulario con los datos
         form = RegistroEmpresaForm(request.POST, request.FILES)
         if form.is_valid(): 
                 try:
                       registro = form.save(commit=False)
+                      #Se encripta la contraseña con el hash 
                       registro.Contraseña = make_password(form.cleaned_data['Contraseña'])
                       registro.save()
                       return redirect('registro')
@@ -21,20 +25,28 @@ def registro(request):
         form = RegistroEmpresaForm()
     return render(request, 'registros.html', {'form': form})
 
+
+#Login de la empresa
 def login_view(request):
     if request.method == 'POST':
-        correo = request.POST['correo']
+        #Se obtienen los datos enviados
+        nombre_empresa = request.POST['nombre_empresa']
         contraseña = request.POST['contraseña']
 
-        user = authenticate(request, username=correo, password=contraseña)
-
-        if user is not None:
-             auth_login(request, user)
-             return redirect('home')
+        #Se realiza la busqueda de los datos en la coleccion
+        user = registro_empresa_collection.find_one({'Nombre_empre': nombre_empresa})
+        if user:
+             #Verificacion de la contraseña hasheada
+             if check_password(contraseña, user['Contraseña']):
+                request.session['user_id'] = str(user['_id'])
+                return redirect('home')
+             else:
+                messages.error(request, 'Contraseña incorrecta. Inténtalo de nuevo.')
         else:
-             messages.error(request, 'Credenciales inválidas. Inténtalo de nuevo.')
-
+             messages.error(request, 'Nombre de empresa no encontrado')
+    
     return render(request, 'login.html')
 
+#Vista de la pagina principal 
 def home(request):
     return render(request, 'home.html')

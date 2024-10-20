@@ -7,5 +7,3 @@ class RegistroEmpresaForm(forms.ModelForm):
     class Meta:
         model = RegistroEmpresa
         fields = ['Nombre_empre', 'Correo', 'Contraseña','Imagen', 'Palabra_clave']
-
-
