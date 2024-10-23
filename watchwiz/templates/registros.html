@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -6,11 +7,19 @@
 </head>
 <body>
     <h2>Registro de Empresa</h2>
+    
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Registrarse</button>
     </form>
-    <p>Ir al login <a href="{% url 'login' %}">Iniciar sesión</a></p>
+
+    <p>Ya tienes una cuenta <a href="{% url 'login' %}"> Ir al login </a></p>
+
+    {% if form.errors %}
+        <div style="color: red;">
+            {{ form.errors }}
+        </div>
+    {% endif %}
 </body>
 </html>

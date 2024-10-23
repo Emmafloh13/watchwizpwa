@@ -1,5 +1,5 @@
 <h1>Home</h1>
-<form method="POST">
+<form method="POST" action="{% url 'login' %}">
     {% csrf_token %}
-    <button type="submit">Bienvenido</button>
-</form>
+    <button type="submit">Cerrar Sesión</button>
+    </form>

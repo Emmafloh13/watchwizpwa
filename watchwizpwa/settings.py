@@ -1,6 +1,15 @@
 import os
 from pathlib import Path
 
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+cred = credentials.Certificate("./watchwiz_clave.json")
+firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'watchwizpwa',
-    'watchwiz'
+    'watchwiz',
 ]
 
 MIDDLEWARE = [
@@ -39,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'watchwizpwa.urls'
@@ -59,31 +69,12 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'watchwizpwa.wsgi.application'
-
-MONGO_DB_NAME = 'Watchwiz'
-MONGO_DB_HOST = 'mongodb+srv://arlettearenass:NHCOu2o0fQ7GOxlK@watchwiz.fx9dj.mongodb.net/Watchwiz?retryWrites=true&w=majority'
-
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'Watchwiz',
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': 'mongodb+srv://arlettearenass:NHCOu2o0fQ7GOxlK@watchwiz.fx9dj.mongodb.net/?retryWrites=true&w=majority&appName=WatchWiz',
-            'port': 27017,
-            'username': 'arlettearenass',
-            'password': 'NHCOu2o0fQ7GOxlK',
-            'authSource': 'Watchwiz',  
-            'authMechanism': 'SCRAM-SHA-1'  
-            }
-        } 
+        'ENGINE': 'django.db.backends.sqlite3',  # Cambia esto si usas otra base de datos
+        'NAME': BASE_DIR / "db.sqlite3",  # Archivo de la base de datos
     }
-#Collection 
-MONGO_URI = 'mongodb+srv://arlettearenass:NHCOu2o0fQ7GOxlK@watchwiz.fx9dj.mongodb.net/?retryWrites=true&w=majority&appName=WatchWiz'
-MONGO_DB_NAME = 'Watchwiz'
-MONGO_COLLECTION_NAME = 'watchwiz_registroempresa'
-
+}
 
 
 # Password validation
@@ -124,10 +115,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 DEBUG = True
 
-AUTHENTICATION_BACKENDS = [
-    'watchwiz.backends.CustomBackend',  
-    'django.contrib.auth.backends.ModelBackend',  
-]
+
 
 
 

@@ -1,0 +1,80 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+env/
+venv/
+ENV/
+VENV/
+env.bak/
+venv.bak/
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+db.sqlite3
+
+# Local environment settings (e.g., if you have a `.env` file for environment variables)
+.env
+.local_settings.py
+
+# Media and static files
+/media/
+*.media
+/static/
+staticfiles/
+static/
+
+# VS Code configuration files
+.vscode/
+
+# MacOS system files
+.DS_Store
+
+# IDEs and editor configurations (optional)
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Backup files
+*.bak
+*.swp
+*~
+
+# Migrations
+*/migrations/__pycache__/
+*/migrations/*.pyc
+*/migrations/*.pyo
+*/migrations/*.py[cod]
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+
+# Pipenv files (if using Pipenv)
+Pipfile.lock
+
+# Other Python-specific exclusions
+*.pyo
+.pytest_cache/
+.pyre/
+.mypy_cache/
+
+# Docker-related (if using Docker)
+docker-compose.override.yml
+.dockerignore
+
+#Archivo clave JSON
+watchwiz_clave.json
