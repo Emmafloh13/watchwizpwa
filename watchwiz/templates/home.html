@@ -1,5 +1,10 @@
 <h1>Home</h1>
+<form method="POST" action="{% url 'registro_trabajos' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Esto renderiza el formulario -->
+    <button type="submit">Registrar Trabajo</button>
+</form>
 <form method="POST" action="{% url 'login' %}">
     {% csrf_token %}
     <button type="submit">Cerrar Sesión</button>
-    </form>
+</form>

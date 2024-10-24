@@ -2,12 +2,27 @@ from django import forms
 
 # Formulario del Registro de empresas
 class RegistroEmpresaForm(forms.Form):
-    nombre_empre = forms.CharField(max_length=100, required=True, label="Nombre de la empresa")
+    DAYS_OF_WEEK = [
+        ('Lunes'),
+        ('Martes'),
+        ('Miércoles'),
+        ('Jueves'),
+        ('Viernes'),
+        ('Sábado'),
+        ('Domingo'),
+    ]
+    name = forms.CharField(max_length=100, required=True, label="Nombre de la empresa")
     email = forms.EmailField(required=True, label="Correo electrónico")
     password = forms.CharField(widget=forms.PasswordInput, required=True, label="Contraseña")
     confirm_password = forms.CharField(widget=forms.PasswordInput, required=True, label="Confirmar contraseña")
     imagen = forms.ImageField(required=True, label="Logo de la empresa")
-    palabra_clave = forms.CharField(max_length=100, required=True, label="Palabra clave")
+    keyword = forms.CharField(max_length=100, required=True, label="Palabra clave")
+    days_of_week = forms.MultipleChoiceField(
+        choices=DAYS_OF_WEEK, 
+        widget=forms.CheckboxSelectMultiple, 
+        required=True, 
+        label="Días de la semana que no trabajan"
+    )
 
     #Validacion personalizada para que las contraseñas coincidan
     def clean(self):
@@ -26,3 +41,19 @@ class RegistroEmpresaForm(forms.Form):
 class LoginForm(forms.Form):
     email = forms.EmailField(label="Correo electronico", max_length=100)
     password = forms.CharField(widget=forms.PasswordInput, required=True, label="Contraseña")
+
+
+
+class TrabajosForms(forms.Form):
+    client_name = forms.CharField(max_length=250, label="Nombre del cliente")
+    phone_number = forms.CharField(max_length=20, label= "Número de teléfono")
+    description = forms.CharField(widget=forms.Textarea, label="Descripción")
+    photo = forms.ImageField(required=False, label="Foto")
+    service_cost = forms.DecimalField(max_digits=10, decimal_places=2, label= "Costo del servicio")
+    advance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, label= "Anticipo")
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.error_messages['required'] = ''
+
