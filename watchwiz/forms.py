@@ -1,15 +1,16 @@
+# Formulario del Registro de empresas
 from django import forms
 
-# Formulario del Registro de empresas
+
 class RegistroEmpresaForm(forms.Form):
     DAYS_OF_WEEK = [
-        ('Lunes'),
-        ('Martes'),
-        ('Miércoles'),
-        ('Jueves'),
-        ('Viernes'),
-        ('Sábado'),
-        ('Domingo'),
+        ('Lunes', 'Lunes'),
+        ('Martes', 'Martes'),
+        ('Miércoles', 'Miércoles'),
+        ('Jueves', 'Jueves'),
+        ('Viernes', 'Viernes'),
+        ('Sábado', 'Sábado'),
+        ('Domingo', 'Domingo'),
     ]
     name = forms.CharField(max_length=100, required=True, label="Nombre de la empresa")
     email = forms.EmailField(required=True, label="Correo electrónico")
@@ -39,21 +40,54 @@ class RegistroEmpresaForm(forms.Form):
 # Formulario para la validacion del login
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(label="Correo electronico", max_length=100)
-    password = forms.CharField(widget=forms.PasswordInput, required=True, label="Contraseña")
+    email = forms.EmailField(
+        label= '',
+        required=True,
+        max_length=30,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Correo',
+            'autofocus': 'autofocus'
+        }),
+    )
+    password = forms.CharField(
+        label= '',
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Contraseña',
+        }),
+        required=True,
+    )
 
 
 
 class TrabajosForms(forms.Form):
-    client_name = forms.CharField(max_length=250, label="Nombre del cliente")
+    client_name = forms.CharField(
+        max_length=250,
+        label="Nombre del cliente",
+    )
     phone_number = forms.CharField(max_length=20, label= "Número de teléfono")
     description = forms.CharField(widget=forms.Textarea, label="Descripción")
     photo = forms.ImageField(required=False, label="Foto")
     service_cost = forms.DecimalField(max_digits=10, decimal_places=2, label= "Costo del servicio")
     advance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, label= "Anticipo")
+    # Campo de fecha por llo minetras
+    received_date = forms.DateField(widget=forms.SelectDateWidget(), label="Fecha de recepción")
+    review_date = forms.DateField(widget=forms.SelectDateWidget(), label="Fecha de revisión")   
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages['required'] = ''
+
+
+
+class RefaccionesForms(forms.Form):
+    foto = forms.ImageField(label="Foto")
+    medida = forms.CharField(max_length=100, label="Medida")
+    precio = forms.DecimalField(max_digits=10, decimal_places=2, label="Precio")
+    calidad = forms.CharField(max_length=100, label="Calidad")
+    color = forms.CharField(max_length=100, label="Color")
+    caracteristicas = forms.CharField(widget=forms.Textarea, label="Características")
+    longitud = forms.DecimalField(max_digits=10, decimal_places=2, label="Longitud")
+    can_aceptable = forms.IntegerField(label="Cantidad aceptable")
+    existentes = forms.IntegerField(label="Existencias", initial=0) #Mostrar el conteo actual
 

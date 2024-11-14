@@ -1,0 +1,7 @@
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Muestra el formulario con los campos automáticamente -->
+
+    <button type="submit">Registrar piezas</button>
+    <a href="{% url 'home' %}"><button type="button">Cancelar</button></a>
+</form>
