@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Principal</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/p1.css' %}">
+    <title>WatchWiz</title>
 </head>
 <body>
+    <div>
+        <img src="{% static 'img/LogoWacthWiz.png' %}" alt="WatchWiz">
 
-    <h1>Sistema de Gestión de Reparaciones</h1>
-
-    <!-- Botón para iniciar sesión -->
-    <form action="{% url 'login' %}">
-        <button type="submit">Iniciar Sesión</button>
-    </form>
-
-    <!-- Botón para registrarse -->
-    <form action="{% url 'registro' %}">
-        <button type="submit">Registrarse</button>
-    </form>
+        <h1>Sistema de Gestión de Reparaciones</h1>
+    
+        <!-- enlace para iniciar sesión -->
+        <a class="btn-estandar" href="{% url 'login' %}">Iniciar Sesión</a>
+    
+        <!-- enlace para registrarse -->
+        <a class="rgt" href="{% url 'registro' %}">Registrarse</a>
+    </div>
 
 </body>
 </html>
