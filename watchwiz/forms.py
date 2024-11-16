@@ -40,13 +40,30 @@ class RegistroEmpresaForm(forms.Form):
 # Formulario para la validacion del login
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(label="Correo electronico", max_length=100)
-    password = forms.CharField(widget=forms.PasswordInput, required=True, label="Contraseña")
+    email = forms.EmailField(
+        label= '',
+        required=True,
+        max_length=30,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Correo',
+            'autofocus': 'autofocus'
+        }),
+    )
+    password = forms.CharField(
+        label= '',
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Contraseña',
+        }),
+        required=True,
+    )
 
 
 
 class TrabajosForms(forms.Form):
-    client_name = forms.CharField(max_length=250, label="Nombre del cliente")
+    client_name = forms.CharField(
+        max_length=250,
+        label="Nombre del cliente",
+    )
     phone_number = forms.CharField(max_length=20, label= "Número de teléfono")
     description = forms.CharField(widget=forms.Textarea, label="Descripción")
     imagen = forms.ImageField(required=False, label="Foto")

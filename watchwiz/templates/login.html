@@ -1,12 +1,41 @@
-<form method="POST" action="{%url 'login' %}">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/p1.css' %}">
+
+  <style>
+    .fondoIS{
+      background-image: url("{% static 'img/LogoWacthWiz.png' %}");
+    }
+  </style>
+
+  <title>WatchWiz | Iniciar Sesión</title>
+</head>
+<body class="fondoIS">
+  
+  <!-- Formulario para iniciar Sesión -->
+  <form class="formularioIS" method="POST" action="{%url 'login' %}">
+    <span class="tituloIS">Inicio de Sesión</span>
+
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Iniciar sesión</button>
-</form>
-<p>Aun no tienes una cuenta? <a href="{% url 'registro' %}"> registrate aqui </a></p>
 
-{% if messages %}
-  {% for message in messages %}
-    <div>{{ message }}</div>
-  {% endfor %}
-{% endif %}
+    <!-- Botón para confirmar lo que semande en el formulario -->
+    <button class="btn-estandar btn-IS" type="submit">Iniciar</button>
+
+    <!-- Link para registrase -->
+    <span>Aun no tienes una cuenta?</span>
+    <a class="rgt" href="{% url 'registro' %}">Registrate aquí</a>
+  </form>
+  
+  {% if messages %}
+    {% for message in messages %}
+      <div>{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+</body>
+</html>
+
