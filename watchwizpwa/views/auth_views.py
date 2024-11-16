@@ -1,11 +1,9 @@
-import os
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 from django.contrib import messages
 from watchwiz.forms import LoginForm, RegistroEmpresaForm
 from watchwiz.services.firebase_service import registrar_empresa, validar_usuario
+from watchwiz.services.services_data import obtener_datos_empresa, obtener_trabajos
 
 
 def registro_view(request):
@@ -21,13 +19,9 @@ def registro_view(request):
             keyword = form.cleaned_data['keyword']
             days_of_week = form.cleaned_data['days_of_week']
 
-            # Guardar la imagen localmente
-            imagen_path = default_storage.save(f'imagenes/{imagen.name}', ContentFile(imagen.read()))
-            # Obtener la ruta absoluta de la imagen
-            imagen_absolute_path = os.path.join(default_storage.location, imagen_path)
-
+           
             # Registro de la empresa en firebase
-            registrar_empresa(name, email, password, imagen_absolute_path, keyword, days_of_week)
+            registrar_empresa(name, email, password, imagen, keyword, days_of_week)
 
             # Redireccionamiento
             return redirect('registro')
@@ -71,10 +65,25 @@ def logout_view(request):
     
 
 def home_view(request):
+
         #Verificar si el usuario esta en la bd
         if not request.session.get('authenticated'):
             return redirect('login')
-        return render(request, 'home.html')
+        
+        email = request.session.get('user_email')
+
+
+        empresa_data = obtener_datos_empresa(email)
+        imagen_url = empresa_data.get('imagen') if empresa_data else None
+
+        trabajos = obtener_trabajos()
+
+        context = {
+             'imagen_url': imagen_url,
+             'empresa_data': empresa_data
+
+        }
+        return render(request, 'home.html', context)
 
 def principal_view(request):
         return render(request, 'index.html')

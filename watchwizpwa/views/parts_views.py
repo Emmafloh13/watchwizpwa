@@ -10,14 +10,13 @@ def refacciones_view(request):
             print("Datos del formulario:", form.cleaned_data)
             # Guardar datos en Firestore
             registrar_refacciones(
-                form.cleaned_data['foto'],
+                form.cleaned_data['imagen'],
                 form.cleaned_data['medida'],
                 form.cleaned_data['precio'],
                 form.cleaned_data['calidad'],
                 form.cleaned_data['color'],
                 form.cleaned_data['caracteristicas'],
                 form.cleaned_data['longitud'],
-                form.cleaned_data['can_aceptable'],
                 form.cleaned_data['existentes'])
             return redirect('home')  # Redirigir a una página de éxito
     else:

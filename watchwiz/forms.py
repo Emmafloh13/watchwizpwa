@@ -49,12 +49,12 @@ class TrabajosForms(forms.Form):
     client_name = forms.CharField(max_length=250, label="Nombre del cliente")
     phone_number = forms.CharField(max_length=20, label= "Número de teléfono")
     description = forms.CharField(widget=forms.Textarea, label="Descripción")
-    photo = forms.ImageField(required=False, label="Foto")
+    imagen = forms.ImageField(required=False, label="Foto")
     service_cost = forms.DecimalField(max_digits=10, decimal_places=2, label= "Costo del servicio")
     advance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, label= "Anticipo")
     # Campo de fecha por llo minetras
-    received_date = forms.DateField(widget=forms.SelectDateWidget(), label="Fecha de recepción")
-    review_date = forms.DateField(widget=forms.SelectDateWidget(), label="Fecha de revisión")   
+    received_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'text', 'id': 'received_date'}), label="Fecha de recepción")
+    review_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'text', 'id': 'review_date'}), label="Fecha de revisión")   
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -64,13 +64,11 @@ class TrabajosForms(forms.Form):
 
 
 class RefaccionesForms(forms.Form):
-    foto = forms.ImageField(label="Foto")
+    imagen = forms.ImageField(label="Foto")
     medida = forms.CharField(max_length=100, label="Medida")
     precio = forms.DecimalField(max_digits=10, decimal_places=2, label="Precio")
     calidad = forms.CharField(max_length=100, label="Calidad")
     color = forms.CharField(max_length=100, label="Color")
     caracteristicas = forms.CharField(widget=forms.Textarea, label="Características")
     longitud = forms.DecimalField(max_digits=10, decimal_places=2, label="Longitud")
-    can_aceptable = forms.IntegerField(label="Cantidad aceptable")
     existentes = forms.IntegerField(label="Existencias", initial=0) #Mostrar el conteo actual
-

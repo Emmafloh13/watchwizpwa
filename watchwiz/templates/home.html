@@ -1,10 +1,25 @@
-<h1>Home</h1>
+{% if imagen_url %}
+    <img src="{{ imagen_url }}" alt="Logo de la empresa" width="150" height="150">
+{% else %}
+    <p>No se ha subido un logo para esta empresa.</p>
+{% endif %}
+
+<!-- Incluye la lista de trabajos -->
+{% include 'trabajos_data.html' %}
+
+<!-- Formulario para registrar un trabajo -->
 <form method="POST" action="{% url 'registro_trabajos' %}" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}  <!-- Esto renderiza el formulario -->
+    
+    <!-- Renderiza los campos del formulario -->
+    {{ form.as_p }}  
     <button type="submit">Registrar Trabajo</button>
 </form>
+
+<!-- Formulario para cerrar sesión -->
 <form method="POST" action="{% url 'login' %}">
     {% csrf_token %}
     <button type="submit">Cerrar Sesión</button>
 </form>
+
+

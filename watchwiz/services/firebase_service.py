@@ -1,9 +1,7 @@
-import os
 from firebase_admin import firestore, storage, auth
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
 import firebase_admin
-from datetime import datetime
 
 
 # Inicializar Firebase
@@ -12,7 +10,21 @@ if not firebase_admin._apps:
 
 db = firestore.client()
 
-def registrar_empresa(name, email, password, imagen_path, keyword, days_of_week):
+
+# Cargar la imagen a Firebase storage
+def subir_imagen(imagen):
+        try:
+            bucket = storage.bucket('watchwiz-721eb.appspot.com')
+            blob = bucket.blob(f'images/{imagen.name}')
+            blob.upload_from_file(imagen, content_type=imagen.content_type)
+            return blob.public_url
+        except Exception as e:
+            print(f"Error al subir la imagen a Firebase Storage: {e}")
+            return None
+
+
+# Registro de empresas
+def registrar_empresa(name, email, password, imagen, keyword, days_of_week):
     try:
         # Crear el usuario en Firebase Authentication
         user = auth.create_user(
@@ -23,18 +35,14 @@ def registrar_empresa(name, email, password, imagen_path, keyword, days_of_week)
         # Hashear contraseña
         hashed_password = make_password(password)
 
-       # Cargar la imagen a Firebase storage
-        bucket = storage.bucket('watchwiz-721eb.appspot.com')
-        blob = bucket.blob(f'images/{os.path.basename(imagen_path)}')
-        blob.upload_from_filename(imagen_path)
-        imagen_url = blob.public_url
+        imagen_url = subir_imagen(imagen) if imagen else None
 
     # creacion de la empresa con los datos
         empresa_data = {
             'name': name,
             'email': email,
             'password': hashed_password,
-            'image': imagen_url,
+            'imagen': imagen_url,
             'keyword': keyword,
             'days_of_week': days_of_week
             }
@@ -77,22 +85,25 @@ def validar_usuario(email, password):
 
 # Nueva función para registrar trabajos
 def registrar_trabajo(client_name, phone_number, description,
-                      photo_url, service_cost, advance, received_date, review_date):
+                      imagen, service_cost, advance, received_date, review_date):
+
 
 # Funcion para cular el restante
     service_cost = float(service_cost)
     advance = float(advance) if advance is not None else 0
     remaining = service_cost - advance
-
     received_date = received_date.strftime('%Y-%m-%d')
     review_date = review_date.strftime('%Y-%m-%d')
 
+#Subir foto de trabajos
+    imagen_url = subir_imagen(imagen) if imagen else None
+    
 
     trabajo_data = {
         'client_name': client_name,
         'phone_number': phone_number,
         'description': description,
-        'photo': photo_url,  
+        'photo': imagen_url,  
         'service_cost': service_cost,
         'advance': advance,
         'remaining': remaining,
@@ -102,51 +113,28 @@ def registrar_trabajo(client_name, phone_number, description,
 
     db.collection('trabajos').add(trabajo_data)
 
-def subir_foto(foto):
-    if not foto:
-        print("No se recibió ninguna foto para subir")
-        return ""
-    bucket = storage.bucket('watchwiz-721eb.appspot.com')
-    blob = bucket.blob(f'images/{foto.name}')
-    blob.upload_from_file(foto)
-    foto_url = blob.public_url
-    print(f"Foto URL generada: {foto_url}")
-    return foto_url
-
-# Obteniendo los datos de los trabajos
-def obtener_trabajos():
-    trabajos = db.collection('trabajos').stream()
-    lista_trabajos = []
-    for trabajo in trabajos:
-        data = trabajo.to_dict()
-        lista_trabajos.append(data)
-    return lista_trabajos
-
 
 def registrar_refacciones(foto, media, precio, calidad, color, caracteristicas,
-                          longitud, can_aceptable, existenes):
+                          longitud, existenes):
     try:
         #Subir foto a firebase
-        foto_url = subir_foto(foto)
+        imagen_url = subir_imagen(foto) if foto else None
 
         # Guardar las refacciones
         refaccion_data = {
-            'foto': foto_url,
+            'imagen': imagen_url,
             'medida': media,
             'precio': float(precio),
             'calidad': calidad,
             'color': color,
             'caracteristicas': caracteristicas,
             'longitud': float(longitud),
-            'can_aceptable': can_aceptable,
             'existentes': existenes
         }
 
         #Añadiendo la coleccion de refacciones
-        ref = db.collection('refacciones').add(refaccion_data)
+        db.collection('refacciones').add(refaccion_data)
         print(f"Refacciones registradas con éxito")
     except Exception as e:
         print(f"Error al registrar las refacciones: {e}")
 
-
-        
