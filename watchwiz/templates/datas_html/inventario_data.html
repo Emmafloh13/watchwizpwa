@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+</head>
+<body>
+    <h1>Inventario</h1>
+
+
+    <!-- Botón de Nueva Categoría -->
+    <a href="{% url 'registrar_categoria' %}">
+        <button class="categoria-boton">Nueva Categoría</button>
+    </a>
+
+    <!-- Botones de Filtro de Categorías -->
+    <div>
+        <a href="{% url 'inventario' %}">
+            <button class="categoria-boton">Todas</button>
+        </a>
+        {% for categoria in categorias %}
+            <a href="{% url 'inventario' %}?categoria={{ categoria.nombre }}">
+                <button class="categoria-boton">{{ categoria.nombre }}</button>
+            </a>
+        {% endfor %}
+    </div>
+
+    <!-- Mostrar refacciones -->
+    <div>
+        {% if refacciones %}
+            {% for refaccion in refacciones %}
+                <div class="refaccion">
+                    <img src="{{ refaccion.imagen }}" alt="Imagen de {{ refaccion.categoria }}">
+                    <p>{{ refaccion.categoria }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No hay refacciones con esta categoría.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

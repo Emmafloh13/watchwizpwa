@@ -25,3 +25,28 @@ def obtener_trabajos():
     except Exception as e:
         print(f"Error al obtener los trabajos: {e}")
         return []
+    
+def obtener_categorias():
+     categorias = []
+     try:
+        docs = db.collection('categorias').stream()
+        for doc in docs:
+            categorias.append({'nombre': doc.to_dict().get('nombre', '')})
+     except Exception as e:
+            print(f"Error al obtener las categorías: {e}")
+     return categorias
+
+
+def obtener_refacciones():
+    db = firestore.client()
+    refacciones = []
+    refacciones_docs = db.collection('refacciones').stream()
+    for doc in refacciones_docs:
+        refaccion = doc.to_dict()
+        refacciones.append({
+            'imagen': refaccion.get('imagen', ''),
+            'categoria': refaccion.get('categoria', '')
+            })
+    return refacciones
+    
+

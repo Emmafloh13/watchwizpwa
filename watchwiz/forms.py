@@ -81,11 +81,30 @@ class TrabajosForms(forms.Form):
 
 
 class RefaccionesForms(forms.Form):
-    imagen = forms.ImageField(label="Foto")
-    medida = forms.CharField(max_length=100, label="Medida")
-    precio = forms.DecimalField(max_digits=10, decimal_places=2, label="Precio")
-    calidad = forms.CharField(max_length=100, label="Calidad")
-    color = forms.CharField(max_length=100, label="Color")
-    caracteristicas = forms.CharField(widget=forms.Textarea, label="Características")
-    longitud = forms.DecimalField(max_digits=10, decimal_places=2, label="Longitud")
-    existentes = forms.IntegerField(label="Existencias", initial=0) #Mostrar el conteo actual
+     # Campos obligatorios
+    imagen = forms.ImageField(label="Imagen", required=True)
+    categoria = forms.ChoiceField(label="Categoría", choices=[], required=True)
+    precio = forms.DecimalField(max_digits=10, decimal_places=2, label="Precio", required=True)
+    medida = forms.CharField(max_length=100, label="Medida", required=True)
+    color = forms.CharField(max_length=100, label="Color", required=True)
+    caracteristicas = forms.CharField(widget=forms.Textarea, label="Características", required=True)
+    existentes = forms.IntegerField(label="Existencia", required=True)
+
+    # Campos opcionales
+    tipo = forms.CharField(max_length=100, label="Tipo", required=False)
+    longitud = forms.DecimalField(max_digits=10, decimal_places=2, label="Longitud", required=False)
+    diametro = forms.DecimalField(max_digits=10, decimal_places=2, label="Diámetro", required=False)
+    tamaño = forms.CharField(max_length=100, label="Tamaño", required=False)
+    espesor = forms.DecimalField(max_digits=10, decimal_places=2, label="Espesor", required=False)
+    numero = forms.IntegerField(label="Número", required=False)
+    origen = forms.CharField(max_length=100, label="Origen", required=False)
+
+    def __init__(self, *args, **kwargs):
+        # Extrae las categorías de las opciones dinámicas
+        categorias_choices = kwargs.pop('categorias_choices', [])
+        super().__init__(*args, **kwargs)
+        self.fields['categoria'].choices = categorias_choices
+
+
+class CategoriaForms(forms.Form):
+    nombre = forms.CharField(max_length=100, required=True, label="Nombre de la categoria")

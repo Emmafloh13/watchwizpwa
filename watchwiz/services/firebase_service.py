@@ -114,27 +114,52 @@ def registrar_trabajo(client_name, phone_number, description,
     db.collection('trabajos').add(trabajo_data)
 
 
-def registrar_refacciones(foto, media, precio, calidad, color, caracteristicas,
-                          longitud, existenes):
+
+def registrar_refacciones(foto, categoria, precio, medida, color, caracteristicas, 
+                          existencia, tipo=None, longitud=None, diametro=None, 
+                          tamaño=None, espesor=None, numero=None, origen=None):
     try:
-        #Subir foto a firebase
+        # Subir foto a Firebase
         imagen_url = subir_imagen(foto) if foto else None
 
-        # Guardar las refacciones
+        # Datos de la refacción
         refaccion_data = {
             'imagen': imagen_url,
-            'medida': media,
+            'categoria': categoria,
             'precio': float(precio),
-            'calidad': calidad,
+            'medida': medida,
             'color': color,
             'caracteristicas': caracteristicas,
-            'longitud': float(longitud),
-            'existentes': existenes
+            'existencia': existencia,
+            'tipo': tipo,
+            'longitud': float(longitud) if longitud else None,
+            'diametro': float(diametro) if diametro else None,
+            'tamaño': tamaño,
+            'espesor': float(espesor) if espesor else None,
+            'numero': numero,
+            'origen': origen
         }
 
+        # Remover claves con valores `None` antes de guardar
+        refaccion_data = {k: v for k, v in refaccion_data.items() if v is not None}
+
+
         #Añadiendo la coleccion de refacciones
-        db.collection('refacciones').add(refaccion_data)
+        refaccion_data = db.collection('refacciones').add(refaccion_data)
+
         print(f"Refacciones registradas con éxito")
     except Exception as e:
         print(f"Error al registrar las refacciones: {e}")
 
+
+
+def registrar_categoria(nombre):
+    try:
+        refaccion_data = {
+            'nombre': nombre
+        }
+        # Guardar la categoria en Firestore
+        db.collection('categorias').add(refaccion_data)
+        print(f"Categoría '{nombre}' registrada con éxito")
+    except Exception as e:
+        print(f"Error al registrar la categoría: {e}")

@@ -26,12 +26,12 @@ def registro_view(request):
             # Redireccionamiento
             return redirect('registro')
         else: 
-            return render(request, 'registros.html', {'form': form})
+            return render(request, 'registro_html/registros.html', {'form': form})
         
     else:
             form = RegistroEmpresaForm()
 
-    return render(request, 'registros.html', {'form': form})
+    return render(request, 'registro_html/registros.html', {'form': form})
 
 # Login validacion
 
@@ -52,10 +52,10 @@ def login_view(request):
                  # Si las credenciales sson incorrectaar que se muestre el mensaje
                  messages.error(request, 'Credenciales inválidas. Inténtalo de nuevo')
         else:
-             return render(request, 'login.html', {'form': form})
+             return render(request, 'auth_html/login.html', {'form': form})
      else:
         form = LoginForm()
-        return render(request, 'login.html', {'form': form})
+        return render(request, 'auth_html/login.html', {'form': form})
 
 # Cerrar la sesion
 def logout_view(request):

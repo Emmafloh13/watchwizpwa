@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Categoría</title>
+</head>
+<body>
+    <h1>Registrar una Nueva Categoría</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <!-- Muestra todos los campos del formulario -->
+        <div>
+            {{ form.nombre.label_tag }}
+            {{ form.nombre }}
+        </div>
+
+        <button type="submit">Registrar Categoría</button>
+    </form>
+</body>
+</html>

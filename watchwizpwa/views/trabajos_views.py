@@ -30,7 +30,7 @@ def registro_trabajos(request):
             return redirect('home')
     else:
         form = TrabajosForms()
-    return render(request, 'registro_trabajos.html', {'form': form})
+    return render(request, 'registro_html/registro_trabajos.html', {'form': form})
 
 
 def trabajos_views(request):

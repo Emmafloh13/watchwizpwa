@@ -4,8 +4,12 @@
     <p>No se ha subido un logo para esta empresa.</p>
 {% endif %}
 
-<!-- Incluye la lista de trabajos -->
-{% include 'trabajos_data.html' %}
+<!-- Botones de navegación -->
+<div style="margin: 20px 0;">
+    <a href="{% url 'home' %}" class="btn btn-primary" style="margin-right: 10px;">Tareas</a>
+    <a href="{% url 'inventario' %}" class="btn btn-success" style="margin-right: 10px;">Inventario</a>
+</div>
+
 
 <!-- Formulario para registrar un trabajo -->
 <form method="POST" action="{% url 'registro_trabajos' %}" enctype="multipart/form-data">
