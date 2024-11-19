@@ -3,18 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Empresa</title>
-</head>
-<body>
-    <h2>Registro de Empresa</h2>
+    {% load static %}
     
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrarse</button>
-    </form>
+    <link rel="stylesheet" href="{% static 'css/p1.css' %}">
+    <style>
+        .fondoIS{
+          background-image: url("{% static 'img/LogoWacthWiz.png' %}");
+        }
+    </style>
+    <script src="{% static 'fontawesome/js/all.js' %}"></script>
+    <title>WatchWiz | Registro</title>
+</head>
+<body class="fondoIS">
+    <main>
+        <div class="formR">
+            <h2>Registrarse :3</h2>
+            
+            <form class="formularioR" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
 
-    <p>Ya tienes una cuenta <a href="{% url 'login' %}"> Ir al login </a></p>
+                <!-- Caja de inputs junto con la imagen -->
+                <div class="inputR2">
+                    <label for="{{ form.imagen.id_for_label }}" class="inputR">
+                        <i class="fa-regular fa-images"></i>
+                        <span>Sube el "logo" de tu empresa</span>
+                    </label>
+                    {{ form.imagen }}
+    
+                    <!-- Caja donde estarán el resto de los inputs a un lado de la imagen -->
+                    <div class="inputR1">
+                        <!-- Input de name -->
+                        <div class="inputR">
+                            {{ form.name }}
+                            <i class="fa-solid fa-building"></i>
+                        </div>
+                        <!-- Input del correo -->
+                        <div class="inputR">
+                            {{ form.email }}
+                            <i class="fa-solid fa-at"></i>
+                        </div>
+                        <!-- Input de la contraseña -->
+                        <div class="inputR">
+                            {{ form.password }}
+                            <i class="fa solid fa-eye"></i>
+                        </div>
+                        <!-- Input para confirmar la contraseña -->
+                        <div class="inputR">
+                            {{ form.confirm_password }}
+                            <i class="fa solid fa-eye"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inputR">
+                    {{ form.keyword }}
+                    <i class="fa-solid fa-key"></i>
+                </div>
+
+                <span>Días de la semana que no se trabajan</span>
+                {{ form.days_of_week }}
+
+                <button class="btn-estandar" type="submit">Aceptar</button>
+            </form>
+        
+            <a class="cancel" href="{% url 'login' %}"> <i class="fa-solid fa-x"></i> </a>
+        </div>
+    </main>
 
     {% if form.errors %}
         <div style="color: red;">
