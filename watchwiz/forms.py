@@ -104,7 +104,7 @@ class TrabajosForms(forms.Form):
     imagen = forms.ImageField(required=False, label="Foto")
     service_cost = forms.DecimalField(max_digits=10, decimal_places=2, label= "Costo del servicio")
     advance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, label= "Anticipo")
-    # Campo de fecha por llo minetras
+    # Campo de fecha por lo minetras
     received_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'text', 'id': 'received_date'}), label="Fecha de recepción")
     review_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'text', 'id': 'review_date'}), label="Fecha de revisión")   
     
