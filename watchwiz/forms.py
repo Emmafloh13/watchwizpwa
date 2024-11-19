@@ -1,28 +1,64 @@
 # Formulario del Registro de empresas
 from django import forms
 
-
+# Formulario para el registro de empresas
 class RegistroEmpresaForm(forms.Form):
+    imagen = forms.ImageField(
+        required=True,
+        label=""
+    )
+    name = forms.CharField(
+        required=True,
+        label="",
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Nombre de la empresa',
+            'autofocus': 'autofocus',
+        }),
+    )
+    email = forms.EmailField(
+        required=True,
+        label="",
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Correo electrónico',
+        }),
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Contraseña',
+        }),
+        required=True,
+        label="",
+        )
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Confirmar contraseña',
+            }),
+        required=True,
+        label="",
+        )
+    keyword = forms.CharField(
+        required=True,
+        label="",
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Escribe tu palabra clave',
+        }),
+        )
     DAYS_OF_WEEK = [
-        ('Lunes', 'Lunes'),
-        ('Martes', 'Martes'),
-        ('Miércoles', 'Miércoles'),
-        ('Jueves', 'Jueves'),
-        ('Viernes', 'Viernes'),
-        ('Sábado', 'Sábado'),
-        ('Domingo', 'Domingo'),
+        ('Lunes', 'Lun'),
+        ('Martes', 'Mar'),
+        ('Miércoles', 'Mié'),
+        ('Jueves', 'Jue'),
+        ('Viernes', 'Vie'),
+        ('Sábado', 'Sáb'),
+        ('Domingo', 'Dom'),
     ]
-    name = forms.CharField(max_length=100, required=True, label="Nombre de la empresa")
-    email = forms.EmailField(required=True, label="Correo electrónico")
-    password = forms.CharField(widget=forms.PasswordInput, required=True, label="Contraseña")
-    confirm_password = forms.CharField(widget=forms.PasswordInput, required=True, label="Confirmar contraseña")
-    imagen = forms.ImageField(required=True, label="Logo de la empresa")
-    keyword = forms.CharField(max_length=100, required=True, label="Palabra clave")
     days_of_week = forms.MultipleChoiceField(
         choices=DAYS_OF_WEEK, 
-        widget=forms.CheckboxSelectMultiple, 
+        widget=forms.CheckboxSelectMultiple(attrs={
+            'class': 'checkweek',
+            }), 
         required=True, 
-        label="Días de la semana que no trabajan"
+        label=""
     )
 
     #Validacion personalizada para que las contraseñas coincidan
@@ -43,7 +79,6 @@ class LoginForm(forms.Form):
     email = forms.EmailField(
         label= '',
         required=True,
-        max_length=30,
         widget=forms.TextInput(attrs={
             'placeholder': 'Correo',
             'autofocus': 'autofocus'
@@ -69,7 +104,7 @@ class TrabajosForms(forms.Form):
     photo = forms.ImageField(required=False, label="Foto")
     service_cost = forms.DecimalField(max_digits=10, decimal_places=2, label= "Costo del servicio")
     advance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, label= "Anticipo")
-    # Campo de fecha por llo minetras
+    # Campo de fecha por lo minetras
     received_date = forms.DateField(widget=forms.SelectDateWidget(), label="Fecha de recepción")
     review_date = forms.DateField(widget=forms.SelectDateWidget(), label="Fecha de revisión")   
     

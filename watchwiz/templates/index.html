@@ -9,17 +9,19 @@
     <title>WatchWiz</title>
 </head>
 <body>
-    <div>
-        <img src="{% static 'img/LogoWacthWiz.png' %}" alt="WatchWiz">
-
-        <h1>Sistema de Gestión de Reparaciones</h1>
+    <main>
+        <div>
+            <img src="{% static 'img/LogoWacthWiz.png' %}" alt="WatchWiz">
     
-        <!-- enlace para iniciar sesión -->
-        <a class="btn-estandar" href="{% url 'login' %}">Iniciar Sesión</a>
-    
-        <!-- enlace para registrarse -->
-        <a class="rgt" href="{% url 'registro' %}">Registrarse</a>
-    </div>
+            <h1>Sistema de Gestión de Reparaciones</h1>
+        
+            <!-- enlace para iniciar sesión -->
+            <a class="btn-estandar" href="{% url 'login' %}">Iniciar Sesión</a>
+        
+            <!-- enlace para registrarse -->
+            <a class="rgt" href="{% url 'registro' %}">Registrarse</a>
+        </div>
+    </main>
 
 </body>
 </html>
