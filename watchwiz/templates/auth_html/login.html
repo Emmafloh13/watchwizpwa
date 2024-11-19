@@ -15,21 +15,23 @@
   <title>WatchWiz | Iniciar Sesión</title>
 </head>
 <body class="fondoIS">
+  <main>
+    <!-- Formulario para iniciar Sesión -->
+    <form class="formularioIS" method="POST" action="{%url 'login' %}">
+      <span class="tituloIS">Inicio de Sesión</span>
   
-  <!-- Formulario para iniciar Sesión -->
-  <form class="formularioIS" method="POST" action="{%url 'login' %}">
-    <span class="tituloIS">Inicio de Sesión</span>
-
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <!-- Botón para confirmar lo que semande en el formulario -->
-    <button class="btn-estandar btn-IS" type="submit">Iniciar</button>
-
-    <!-- Link para registrase -->
-    <span>Aun no tienes una cuenta?</span>
-    <a class="rgt" href="{% url 'registro' %}">Registrate aquí</a>
-  </form>
+      {% csrf_token %}
+      {{ form.as_p }}
+  
+      <!-- Botón para confirmar lo que semande en el formulario -->
+      <button class="btn-estandar btn-IS" type="submit">Iniciar</button>
+  
+      <!-- Link para registrase -->
+      <span>Aun no tienes una cuenta?</span>
+      <a class="rgt" href="{% url 'registro' %}">Registrate aquí</a>
+    </form>
+  </main>
+  
   
   {% if messages %}
     {% for message in messages %}
