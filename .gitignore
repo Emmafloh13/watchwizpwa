@@ -28,9 +28,6 @@ db.sqlite3
 # Media and static files
 /media/
 *.media
-/static/
-staticfiles/
-static/
 
 # VS Code configuration files
 .vscode/
