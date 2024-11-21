@@ -1,29 +1,18 @@
-{% if imagen_url %}
-    <img src="{{ imagen_url }}" alt="Logo de la empresa" width="150" height="150">
-{% else %}
-    <p>No se ha subido un logo para esta empresa.</p>
-{% endif %}
+{% extends 'base.html' %}
 
-<!-- Botones de navegación -->
-<div style="margin: 20px 0;">
-    <a href="{% url 'home' %}" class="btn btn-primary" style="margin-right: 10px;">Tareas</a>
-    <a href="{% url 'inventario' %}" class="btn btn-success" style="margin-right: 10px;">Inventario</a>
+{% block content %}
+<div class="home-container">
+    <!-- Formulario para registrar un trabajo -->
+    <form method="POST" action="{% url 'registro_trabajos' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrar Trabajo</button>
+    </form>
+
+    <!-- Formulario para cerrar sesión -->
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <button type="submit">Cerrar Sesión</button>
+    </form>
 </div>
-
-
-<!-- Formulario para registrar un trabajo -->
-<form method="POST" action="{% url 'registro_trabajos' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    
-    <!-- Renderiza los campos del formulario -->
-    {{ form.as_p }}  
-    <button type="submit">Registrar Trabajo</button>
-</form>
-
-<!-- Formulario para cerrar sesión -->
-<form method="POST" action="{% url 'login' %}">
-    {% csrf_token %}
-    <button type="submit">Cerrar Sesión</button>
-</form>
-
-
+{% endblock %}
