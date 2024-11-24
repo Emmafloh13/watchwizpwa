@@ -1,10 +1,32 @@
-<aside class="sidebar">
-    <nav>
-        <ul class="menu">
-            <li><a href="{% url 'home' %}">Tareas</a></li>
+<nav>
+    <ul class="menu">
+        <li>
+            <a href="{% url 'home' %}">
+                <i class="fa-solid fa-toolbox"></i>
+                <span>Tareas</span>
+            </a>
+        </li>
             
-            <li><a href="{% url 'inventario' %}">Inventario</a></li>
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-stopwatch"></i>
+                <span>Historial</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'inventario' %}">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <span>Inventario</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Lista de compras</span>
+            </a>
+        </li>
             
-        </ul>
-    </nav>
-</aside>
+    </ul>
+</nav>
