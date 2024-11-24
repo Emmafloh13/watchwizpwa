@@ -106,8 +106,9 @@ class TrabajosForms(forms.Form):
     advance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, label= "Anticipo")
     # Campo de fecha por lo minetras
     received_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'text', 'id': 'received_date'}), label="Fecha de recepción")
-    review_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'text', 'id': 'review_date'}), label="Fecha de revisión")   
-    
+    review_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'text', 'id': 'review_date'}), label="Fecha de revisión")
+    status = forms.CharField(initial="En espera", widget=forms.HiddenInput(), required=False)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
@@ -143,3 +144,22 @@ class RefaccionesForms(forms.Form):
 
 class CategoriaForms(forms.Form):
     nombre = forms.CharField(max_length=100, required=True, label="Nombre de la categoria")
+
+
+STATUS_CHOICES = [
+    ('en espera', 'en espera'),
+    ('inconveniente', 'Inconveniente'),
+    ('reparado', 'Reparado'),
+]
+
+class TrabajoDetaForm(forms.Form):
+    client_name = forms.CharField(label='Nombre del Cliente', widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    phone_number = forms.CharField(label='Número Telefónico', widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    description = forms.CharField(label='Descripción', widget=forms.Textarea(attrs={'readonly': 'readonly'}))
+    imagen = forms.URLField(label='Imagen', widget=forms.URLInput(attrs={'readonly': 'readonly'}))
+    service_cost = forms.DecimalField(label='Costo del Servicio', required=True)
+    advance = forms.DecimalField(label='Anticipo', required=False)
+    received_date = forms.DateField(label='Fecha de Recepción', widget=forms.DateInput(attrs={'readonly': 'readonly'}))
+    review_date = forms.DateField(label='Fecha de Revisión', required=True, widget=forms.DateInput())
+    status = forms.ChoiceField(label='Estado', choices=STATUS_CHOICES)
+

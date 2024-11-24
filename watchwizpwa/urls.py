@@ -17,6 +17,7 @@ urlpatterns = [
     path('trabajos/', trabajos_views, name='trabajos'),
     path('registrar_categoria/', categoria_view, name='registrar_categoria'),
     path('inventario/', inventario_view, name='inventario'),
+
 ]
 
 if settings.DEBUG:

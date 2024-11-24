@@ -1,9 +1,9 @@
+from datetime import datetime, timedelta
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.contrib import messages
 from watchwiz.forms import LoginForm, RegistroEmpresaForm
 from watchwiz.services.firebase_service import registrar_empresa, validar_usuario
-from watchwiz.services.services_data import obtener_datos_empresa, obtener_trabajos
+from watchwiz.services.services_data import obtener_datos_empresa, obtener_trabajos, obtener_trabajos_manana
 
 
 def registro_view(request):
@@ -60,30 +60,35 @@ def login_view(request):
 # Cerrar la sesion
 def logout_view(request):
     request.session.pop('authenticated')
-    messages.success(request, 'Sesión cerrada correctamente')
     return redirect('login')
     
 
 def home_view(request):
+    # Verificar si el usuario está autenticado
+    if not request.session.get('authenticated'):
+        return redirect('login')
+    
+    email = request.session.get('user_email')
+    empresa_data = obtener_datos_empresa(email)
+    imagen_url = empresa_data.get('imagen') if empresa_data else None
 
-        #Verificar si el usuario esta en la bd
-        if not request.session.get('authenticated'):
-            return redirect('login')
-        
-        email = request.session.get('user_email')
+    # Obtener trabajos del día
+    try:
+         trabajos = obtener_trabajos()
+         trabajos_manana = obtener_trabajos_manana()
+    except Exception as e:
+        messages.error(request, "Hubo un error al obtener los trabajos.")
+        trabajos = []
+        trabajos_manana = []
 
+    context = {
+        'imagen_url': imagen_url,
+        'empresa_data': empresa_data,
+        'trabajos': trabajos,  # Pasamos los trabajos a la plantilla
+        'trabajos_manana': trabajos_manana,  # Pasamos los trabajos de mañana a la plantilla
+    }
+    return render(request, 'home.html', context)
 
-        empresa_data = obtener_datos_empresa(email)
-        imagen_url = empresa_data.get('imagen') if empresa_data else None
-
-        trabajos = obtener_trabajos()
-
-        context = {
-             'imagen_url': imagen_url,
-             'empresa_data': empresa_data
-
-        }
-        return render(request, 'home.html', context)
 
 def principal_view(request):
         return render(request, 'index.html')

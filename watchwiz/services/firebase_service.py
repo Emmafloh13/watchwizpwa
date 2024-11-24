@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from firebase_admin import firestore, storage, auth
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
@@ -85,15 +86,23 @@ def validar_usuario(email, password):
 
 # Nueva función para registrar trabajos
 def registrar_trabajo(client_name, phone_number, description,
-                      imagen, service_cost, advance, received_date, review_date):
+                      imagen, service_cost, advance, received_date, review_date, status="En espera"):
 
 
 # Funcion para cular el restante
     service_cost = float(service_cost)
     advance = float(advance) if advance is not None else 0
     remaining = service_cost - advance
-    received_date = received_date.strftime('%Y-%m-%d')
-    review_date = review_date.strftime('%Y-%m-%d')
+
+    # Verificar si received_date y review_date son cadenas y convertirlas a objetos date
+    if isinstance(received_date, str):
+        received_date = datetime.strptime(received_date, '%Y-%m-%d').date()
+
+    if isinstance(review_date, str):
+        review_date = datetime.strptime(review_date, '%Y-%m-%d').date()
+        
+    received_date = received_date.strftime('%Y-%m-%d') if isinstance(received_date, date) else received_date
+    review_date = review_date.strftime('%Y-%m-%d') if isinstance(review_date, date) else review_date
 
 #Subir foto de trabajos
     imagen_url = subir_imagen(imagen) if imagen else None
@@ -108,7 +117,8 @@ def registrar_trabajo(client_name, phone_number, description,
         'advance': advance,
         'remaining': remaining,
         'received_date': received_date,
-        'review_date': review_date
+        'review_date': review_date,
+        'status': status or "En espera"
     }
 
     db.collection('trabajos').add(trabajo_data)
@@ -163,3 +173,6 @@ def registrar_categoria(nombre):
         print(f"Categoría '{nombre}' registrada con éxito")
     except Exception as e:
         print(f"Error al registrar la categoría: {e}")
+
+
+
