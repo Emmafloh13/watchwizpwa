@@ -8,6 +8,9 @@ body{
     background: linear-gradient(180deg, #15648F, #363795);
     display: flex;
 }
+.panel-container {
+    width: 92%;
+}
 
 /* Estilos para nuestra barra de navegación */
 aside{
@@ -39,16 +42,75 @@ nav {
     flex-direction: column;
     justify-content: space-evenly;
     font-size: 2rem;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 .menu a > span {
     font-size: 0.7rem;
 }
 
 .menu a:hover {
-    background: #c2e4f5;
+    background: #279BD0;
     color: #0f2e42;
     width: 7rem;
     height: 7rem;
     font-size: 4rem;
+}
+
+/* Estilos para el header */
+header {
+    padding: 2rem 2rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.search-bar {
+    display: flex;
+    border: 0.25rem solid #e3f1fb;
+    border-radius: 2rem;
+    padding: 0.4rem 1rem;
+    width: 60%;
+    justify-content: space-between;
+}
+.search-bar input, .search-bar button {
+    background: none;
+    border: none;
+    outline: none;
+}
+.search-bar input, .search-bar button {
+    color: #f2f9fd;
+}
+.search-bar input {
+    width: 85%;
+    outline: none;
+}
+.search-bar button {
+    font-size: 1.5rem;
+}
+.header-icons {
+    display: flex;
+    align-items: center;
+    width: 25%;
+    justify-content: space-between;
+    color: #fff;
+    font-size: 1.5rem;
+}
+.header-icons > div {
+    cursor: pointer;
+}
+.iconS{
+    filter: drop-shadow(0.1rem 0.2rem 0.15rem rgba(0,0,0,.6));
+}
+div.user-avatar {
+    width: 60%;
+    height: 5rem;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0.8rem;
+    box-shadow: 0.1rem 0.2rem 0.5rem rgba(0,0,0,.6);
+}
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
