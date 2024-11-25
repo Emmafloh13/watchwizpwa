@@ -1,8 +1,10 @@
-from datetime import datetime
+import decimal
 from firebase_admin import firestore
-from datetime import timedelta
+from datetime import datetime, timedelta, date
+
 
 db = firestore.client()
+
 
 def obtener_datos_empresa(email):
     try:
@@ -82,6 +84,30 @@ def obtener_trabajos_manana():
         print(f"Error al obtener los trabajos de mañana: {e}")
         return []
 
+def obtener_trabajo(trabajo_id):
+    try:
+        trabajo_ref = db.collection('trabajos').document(trabajo_id).get()
+        if trabajo_ref.exists:
+            return trabajo_ref.to_dict()
+        return None
+    except Exception as e:
+        print(f"Error al obtener trabajo: {e}")
+        return None
+
+
+def actualizar_trabajo(trabajo_id, data):
+    try:
+        for key, value in data.items():
+            if isinstance(value, decimal.Decimal):
+                data[key] = float(value)
+            elif isinstance(value, (date, datetime)):
+                data[key] = value.strftime('%Y-%m-%d')  # Asegúrate de que las fechas estén en formato ISO
+            
+        db.collection('trabajos').document(trabajo_id).update(data)
+        print(f"Trabajo {trabajo_id} actualizado correctamente.")
+    except Exception as e:
+        print(f"Error al actualizar trabajo: {e}")
+
 
     
 def obtener_categorias():
@@ -107,3 +133,18 @@ def obtener_refacciones():
             })
     return refacciones
     
+def obtener_trabajos_filtrados(status):
+    try:
+        trabajos_ref = db.collection('trabajos')
+        trabajos = trabajos_ref.where('status', '==', status).stream()
+        trabajos_list = []
+
+        for trabajo in trabajos:
+            trabajo_data = trabajo.to_dict()
+            trabajo_data['id'] = trabajo.id
+            trabajos_list.append(trabajo_data)
+
+        return trabajos_list
+    except Exception as e:
+        print(f"Error al obtener trabajos filtrados por estado: {e}")
+        return []

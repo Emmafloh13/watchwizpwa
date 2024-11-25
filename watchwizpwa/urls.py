@@ -5,6 +5,8 @@ from watchwizpwa.views.auth_views import home_view, login_view, principal_view, 
 from watchwizpwa.views.trabajos_views import registro_trabajos, trabajos_views
 from watchwizpwa.views.refac_views import categoria_view, refacciones_view
 from watchwizpwa.views.invet_views import inventario_view
+from watchwizpwa.views.tra_data_views import trabajo_detail_view
+from watchwizpwa.views.historiaT_views import detalles_trabajos, historial_trabajos
 
 urlpatterns = [
     path('', principal_view, name='principal'),
@@ -17,6 +19,9 @@ urlpatterns = [
     path('trabajos/', trabajos_views, name='trabajos'),
     path('registrar_categoria/', categoria_view, name='registrar_categoria'),
     path('inventario/', inventario_view, name='inventario'),
+    path('trabajo/<str:trabajo_id>/', trabajo_detail_view, name='trabajos_data'),
+    path('historial/', historial_trabajos, name='historial_trabajos'),
+    path('trabajo/<str:trabajo_id>/', detalles_trabajos, name='detalles_trabajo'),
 
 ]
 

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="trabajos_data_container">
+    <h2>Detalles del Trabajo</h2>
+
+    <!-- Datos no editables -->
+    <div class="datos-no-editables">
+        <p><strong>Nombre del Cliente:</strong> {{ datos_no_editables.client_name }}</p>
+        <p><strong>Descripción:</strong> {{ datos_no_editables.description }}</p>
+        <p><strong>Número de Teléfono:</strong> {{ datos_no_editables.phone_number }}</p>
+        <p><img src="{{ datos_no_editables.photo }}" alt="Foto del servicio" style="max-width: 200px;"></p>
+        <p><strong>Fecha de Recepción:</strong> {{ datos_no_editables.received_date }}</p>
+    </div>
+    
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'home' %}"> <button class="categoria-boton">Cancelar</button></a>
+    </form>
+</div>
+{% endblock %}
