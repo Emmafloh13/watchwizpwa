@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from watchwiz.forms import LoginForm, RegistroEmpresaForm

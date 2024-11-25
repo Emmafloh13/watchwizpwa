@@ -7,8 +7,7 @@
         <h2 class = "text-center mb-4">Trabajos de hoy</h2>
         <div class = "trabajos-list">
             {% for trabajo in trabajos %}
-            <div class = "trabajo-card">
-               
+            <div class = "trabajo-card" onclick = "location.href='{% url 'trabajos_data' trabajo.id %}'">
                     <div class = "trabajo-imagen">
                         <img src="{{ trabajo.photo }}" alt="Trabajo de {{ trabajo.client_name}}" />
                     </div>
@@ -30,7 +29,7 @@
          <div class="trabajos-list">
              {% for trabajo in trabajos_manana %}
              <div class="trabajo-card">
-                <div class="trabajo-card" onclick="location.href='{% url 'trabajo_detail' trabajo.id %}'">
+                <div class="trabajo-card" onclick="location.href='{% url 'trabajos_data' trabajo.id %}'">
                     <div class="trabajo-imagen">
                         <img src="{{ trabajo.photo }}" alt="Trabajo de {{ trabajo.client_name }}" />
                     </div>

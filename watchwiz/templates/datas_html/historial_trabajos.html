@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Trabajos</title>
+</head>
+<body>
+    <h1>Historial de Trabajos</h1>
+    
+    <!-- Menú de filtrado -->
+    <form method="get" action="{% url 'historial_trabajos' %}">
+        <select name="status">
+            <option value="">Selecciona estado</option>
+            <option value="En espera" {% if request.GET.status == 'En espera' %}selected{% endif %}>En espera</option>
+            <option value="Inconveniente" {% if request.GET.status == 'Inconveniente' %}selected{% endif %}>Inconveniente</option>
+            <option value="Reparado" {% if request.GET.status == 'Reparado' %}selected{% endif %}>Reparado</option>
+        </select>
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <ul>
+        {% for trabajo in trabajos %}
+            <li>
+                <a href="{% url 'detalles_trabajo' trabajo.id %}">
+                    <img src="{{ trabajo.photo }}" alt="Imagen del trabajo" width="100">
+                    <p>Cliente: {{ trabajo.client_name }}</p>
+                    <p>Fecha de Recepción: {{ trabajo.received_date }}</p>
+                    <p>Costo: {{ trabajo.service_cost }}</p>
+                    <p>Descripción: {{ trabajo.description }}</p>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

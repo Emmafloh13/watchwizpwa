@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Trabajo</title>
+</head>
+<body>
+    <h1>Detalles del Trabajo</h1>
+    
+    <img src="{{ trabajo.photo }}" alt="Imagen del trabajo" width="200">
+    <p><strong>Cliente:</strong> {{ trabajo.client_name }}</p>
+    <p><strong>Teléfono:</strong> {{ trabajo.phone_number }}</p>
+    <p><strong>Descripción:</strong> {{ trabajo.description }}</p>
+    <p><strong>Costo del Servicio:</strong> {{ trabajo.service_cost }}</p>
+    <p><strong>Anticipo:</strong> {{ trabajo.advance }}</p>
+    <p><strong>Restante:</strong> {{ trabajo.remaining }}</p>
+    <p><strong>Fecha de Recepción:</strong> {{ trabajo.received_date }}</p>
+    <p><strong>Fecha de Revisión:</strong> {{ trabajo.review_date }}</p>
+    <p><strong>Estatus:</strong> {{ trabajo.status }}</p>
+
+</body>
+</html>
