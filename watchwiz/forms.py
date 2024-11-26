@@ -147,9 +147,9 @@ class CategoriaForms(forms.Form):
 
 
 ESTADOS_CHOICES = [
-    ('en_espera', 'En espera'),
-    ('inconveniente', 'Inconveniente'),
-    ('reparado', 'Reparado'),
+    ('En espera', 'En espera'),
+    ('Inconveniente', 'Inconveniente'),
+    ('Reparado', 'Reparado'),
 ]
 
 class EditarTrabajoForm(forms.Form):

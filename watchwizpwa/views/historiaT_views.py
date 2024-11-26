@@ -1,11 +1,16 @@
 from django.shortcuts import render
-from watchwiz.services.services_data import obtener_trabajo, obtener_trabajos
+from watchwiz.services.services_data import obtener_trabajo, obtener_trabajos_filtrados
 from django.http import Http404
 
 # Vista para mostrar los trabajos 
 def historial_trabajos(request):
     try:
-        trabajos = obtener_trabajos()
+        # Obtener los estdos del parametro
+        status = request.GET.get('status', '')
+
+        # Obtener los trabajos filtrados
+        trabajos = obtener_trabajos_filtrados(status)
+
         return render(request, 'datas_html/historial_trabajos.html', {'trabajos': trabajos})
     except Exception as e:
         print(f"Error al obtener los trabajos: {e}")

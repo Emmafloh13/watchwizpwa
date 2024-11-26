@@ -136,7 +136,14 @@ def obtener_refacciones():
 def obtener_trabajos_filtrados(status):
     try:
         trabajos_ref = db.collection('trabajos')
-        trabajos = trabajos_ref.where('status', '==', status).stream()
+        
+        # Filtrar por estado si se proporciona
+        if status: 
+            trabajos = trabajos = trabajos_ref.where('status', '==', status).stream()
+
+        else: 
+            trabajos = trabajos_ref.stream()
+            
         trabajos_list = []
 
         for trabajo in trabajos:
