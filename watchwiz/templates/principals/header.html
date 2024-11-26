@@ -1,18 +1,22 @@
-<header class="header">
-    <div class="search-bar">
-        <input type="text" placeholder="Buscar...">
-        <button>🔍</button>
+<div class="search-bar">
+    <input type="text" placeholder="Buscar...">
+    <button>
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+</div>
+<div class="header-icons">
+    <div>
+        <i class="iconS fa-solid fa-calendar-day"></i>
     </div>
-    <div class="header-icons">
-        <span class="icon calendar">📅</span>
-        <span class="icon notifications">🔔</span>
-        <div class="user-avatar">
-            <!-- Mostrar el logo de la empresa -->
-             {% if imagen_url %}
-             <img src="{{ imagen_url }}" alt="Logo de la empresa" width="150" height="150">
-             {% else %}
-             <p>No se ha subido un logo para esta empresa.</p>
-             {% endif %}
-        </div>
+    <div>
+        <i class="iconS fa-solid fa-bell"></i>
     </div>
-</header>
+    <div class="user-avatar">
+        <!-- Mostrar el logo de la empresa -->
+        {% if imagen_url %}
+        <img src="{{ imagen_url }}" alt="Logo de la empresa" width="150">
+        {% else %}
+        <p>No se ha subido un logo para esta empresa.</p>
+        {% endif %}
+    </div>
+</div>

@@ -4,24 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/p2.css' %}">
+    <script src="{% static 'fontawesome/js/all.js' %}"></script>
     <title>WatchWiz | {% block title %}{% endblock %}</title>
 </head>
 <body>
-    <div class="main-container">
+    <aside>
         <!-- Menú lateral -->
         {% include 'principals/menu.html' %}
-
-        <!-- Contenido principal -->
-        <main class="content">
+    </aside>
+    <div class="panel-container">
+        <header>
             <!-- Encabezado -->
             {% include 'principals/header.html' %}
-
-            <!-- Contenido dinámico -->
-            <section class="main-content">
-                {% block content %}
-                <!-- Contenido dinámico de cada vista -->
-                {% endblock %}
-            </section>
+        </header>
+        <!-- Contenido principal -->
+        <main class="content">
+            {% block content %}
+            <!-- Contenido dinámico de cada vista -->
+            {% endblock %}
         </main>
     </div>
 </body>
