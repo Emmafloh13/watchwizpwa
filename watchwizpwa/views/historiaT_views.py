@@ -28,4 +28,4 @@ def detalles_trabajos(request, trabajo_id):
             raise Http404("Trabajo no encontrado")
 
     except Exception as e:
-        raise Http404("Error al obtener el trabajo")
+        raise Http404("Error al obtener los trabajo")
