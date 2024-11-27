@@ -1,47 +1,56 @@
-{% extends 'base.html'%} {% block content %}
-<div class="inventario_container">
-  <!DOCTYPE html>
-  <html lang="es">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Inventario</title>
-    </head>
-    <body>
-      <h1>Inventario</h1>
+{% extends 'base.html' %}
+{% block content %}
+<div class="historial_container">
+    <h1>Inventario</h1>
+    <a href="{% url 'registrar_categoria' %}"><button class="categoria-boton">Nueva Categoría</button></a>
+    <a href="{% url 'refacciones' %}"><button class="categoria-boton">Nueva Refacción</button></a>
 
-      <!-- Botón de Nueva Categoría -->
-      <a href="{% url 'registrar_categoria' %}">
-        <button class="categoria-boton">Nueva Categoría</button>
-      </a>
-
-      <!-- Botones de Filtro de Categorías -->
-      <div>
+    <div>
         <a href="{% url 'inventario' %}">
-          <button class="categoria-boton">Todas</button>
+            <button class="categoria-boton">Todas</button>
         </a>
         {% for categoria in categorias %}
-        <a href="{% url 'inventario' %}?categoria={{ categoria.nombre }}">
-          <button class="categoria-boton">{{ categoria.nombre }}</button>
-        </a>
+            <a href="{% url 'inventario' %}?categoria={{ categoria.nombre }}">
+                <button class="categoria-boton">{{ categoria.nombre }}</button>
+            </a>
         {% endfor %}
-      </div>
+    </div>
 
-      <!-- Mostrar refacciones -->
-      <div>
-        {% if refacciones %} {% for refaccion in refacciones %}
-        <div class="refaccion">
-          <img
-            src="{{ refaccion.imagen }}"
-            alt="Imagen de {{ refaccion.categoria }}"
-          />
-          <p>{{ refaccion.categoria }}</p>
-        </div>
-        {% endfor %} {% else %}
-        <p>No hay refacciones con esta categoría.</p>
-        {% endif %}
-      </div>
-    </body>
-  </html>
-  {% endblock %}
-</div>
+    <div>
+        {% if refacciones %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Categoria</th>
+                        <th>Características</th>
+                        <th>Color</th>
+                        <th>Existencia</th>
+                        <th>Medida</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for refaccion in refacciones %}
+                    <tr onclick="window.location.href='{% url 'detalles_refacciones' refaccion.id %}'">
+                      <td><img src="{{ refaccion.imagen }}" alt="Imagen de {{ refaccion.categoria }}" width="100"></td>
+                      <td>{{ refaccion.categoria }}</td>
+                      <td>{{ refaccion.caracteristicas }}</td>
+                      <td>{{ refaccion.color }}</td>
+                      <td>{{ refaccion.existencia }}</td>
+                      <td>{{ refaccion.medida }}</td>
+                      <td>${{ refaccion.precio }}</td>
+                      <td>
+                        <a href="{% url 'editar_refaccion' refaccion.id %}"><button>Editar</button></a>
+                        <button class="delete-btn" data-id="{{ refaccion.id }}">Eliminar</button>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                {% else %}
+                <p>No hay refacciones con esta categoría.</p>
+                {% endif %}
+              </div>
+            </div>
+{% endblock %}
