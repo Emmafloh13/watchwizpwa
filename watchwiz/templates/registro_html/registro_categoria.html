@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Categoría</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
+<div class="categoria_container">
     <h1>Registrar una Nueva Categoría</h1>
 
     <form method="POST">
@@ -17,6 +12,8 @@
         </div>
 
         <button type="submit">Registrar Categoría</button>
+        <button type="button" onclick="window.location.href='{% url 'inventario' %}'">Cancelar</button>
     </form>
-</body>
-</html>
+</div>
+{% endblock %}
+

@@ -1,8 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="refacciones_container">
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}  <!-- Muestra el formulario con los campos automáticamente -->
     <button type="submit">Registrar piezas</button>
-    <a href="{% url 'home' %}">
+    <a href="{% url 'inventario' %}">
         <button type="button">Cancelar</button>
     </a>
 </form>
+</div>
+{% endblock %}

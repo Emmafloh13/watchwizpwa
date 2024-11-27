@@ -108,31 +108,6 @@ def actualizar_trabajo(trabajo_id, data):
     except Exception as e:
         print(f"Error al actualizar trabajo: {e}")
 
-
-    
-def obtener_categorias():
-     categorias = []
-     try:
-        docs = db.collection('categorias').stream()
-        for doc in docs:
-            categorias.append({'nombre': doc.to_dict().get('nombre', '')})
-     except Exception as e:
-            print(f"Error al obtener las categorías: {e}")
-     return categorias
-
-
-def obtener_refacciones():
-    db = firestore.client()
-    refacciones = []
-    refacciones_docs = db.collection('refacciones').stream()
-    for doc in refacciones_docs:
-        refaccion = doc.to_dict()
-        refacciones.append({
-            'imagen': refaccion.get('imagen', ''),
-            'categoria': refaccion.get('categoria', '')
-            })
-    return refacciones
-    
 def obtener_trabajos_filtrados(status):
     try:
         trabajos_ref = db.collection('trabajos')
