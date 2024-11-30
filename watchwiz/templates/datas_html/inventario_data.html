@@ -21,7 +21,8 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Imagen</th>
+                        <th></th>
+                        <th>Nombre de la pieza</th>
                         <th>Categoria</th>
                         <th>Características</th>
                         <th>Color</th>
@@ -34,6 +35,7 @@
                     {% for refaccion in refacciones %}
                     <tr onclick="window.location.href='{% url 'detalles_refacciones' refaccion.id %}'">
                       <td><img src="{{ refaccion.imagen }}" alt="Imagen de {{ refaccion.categoria }}" width="100"></td>
+                      <td>{{ refaccion.nombre }}</td>
                       <td>{{ refaccion.categoria }}</td>
                       <td>{{ refaccion.caracteristicas }}</td>
                       <td>{{ refaccion.color }}</td>

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from watchwiz.forms import TrabajosForms
-from watchwiz.services.firebase_service import registrar_trabajo
 from watchwiz.services.services_data import obtener_trabajos
+from watchwiz.services.firebase_service import registrar_trabajo
 
 # Vista para el registro de trabajos
 

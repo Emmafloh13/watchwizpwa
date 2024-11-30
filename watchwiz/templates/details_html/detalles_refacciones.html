@@ -6,11 +6,13 @@
     
     <div class="refaccion-details">
         <img src="{{ refaccion.imagen }}" alt="Imagen de {{ refaccion.categoria }}" width="200">
+        <p><strong>Nombre de la pieza:</strong> {{ refaccion.nombre }}</p>
         <p><strong>Medida:</strong> {{ refaccion.medida }}</p>
         <p><strong>Precio:</strong> ${{ refaccion.precio }}</p>
         <p><strong>Categoría:</strong> {{ refaccion.categoria }}</p>
         <p><strong>Color:</strong> {{ refaccion.color }}</p>
         <p><strong>Características:</strong> {{ refaccion.caracteristicas }}</p>
+        <p><strong>Cantidad aceptable:</strong> {{ refaccion.aceptable }}</p>
         <p><strong>Existencia:</strong> {{ refaccion.existencia }}</p>
     
     </div>

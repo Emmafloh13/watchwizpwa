@@ -6,6 +6,7 @@ from watchwizpwa.views.trabajos_views import registro_trabajos, trabajos_views
 from watchwizpwa.views.tra_data_views import trabajo_detail_view
 from watchwizpwa.views.historiaT_views import detalles_trabajos, historial_trabajos
 from watchwizpwa.views.invet_views import categoria_view, detalles_refaccion_view, editar_refaccion_view, eliminar_refaccion_view, inventario_view, refacciones_view
+from watchwizpwa.views.lista_refac_views import filtrar_refacciones_view
 
 urlpatterns = [
     path('', principal_view, name='principal'),
@@ -26,8 +27,10 @@ urlpatterns = [
     path('historial/', historial_trabajos, name='historial_trabajos'),
     path('trabajo/<str:trabajo_id>/', detalles_trabajos, name='detalles_trabajo'),
     # VISTA PARA EDITAR Y ELIMINAR
-     path('editar_refaccion/<str:refaccion_id>/', editar_refaccion_view, name='editar_refaccion'),
+    path('editar_refaccion/<str:refaccion_id>/', editar_refaccion_view, name='editar_refaccion'),
     path('eliminar_refaccion/<str:refaccion_id>/', eliminar_refaccion_view, name='eliminar_refaccion'),
+    # VISTA DE LA LISTA DE COMPRAS
+    path('filtrar_refacciones/', filtrar_refacciones_view, name='filtrar_refacciones'),
     
 
 ]
