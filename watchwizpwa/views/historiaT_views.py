@@ -23,7 +23,7 @@ def detalles_trabajos(request, trabajo_id):
         # Obtener los trabajos de Firestore
         trabajo = obtener_trabajo(trabajo_id)
         if trabajo:
-            return render(request, 'datas_html/detalles_trabajos.html', {'trabajo': trabajo})
+            return render(request, 'details_html/detalles_trabajos.html', {'trabajo': trabajo})
         else:
             raise Http404("Trabajo no encontrado")
 

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="filt_refaccion-container">
+    <h1>Lista de compras</h1>
+
+    <!-- Input tipo rango -->
+    <form method="get" action="">
+        <label for="cantidad">Selecciona la cantidad:</label>
+        <input type="range" id="cantidad" name="cantidad" min="0" max="100" value="{{ cantidad }}" 
+               oninput="this.nextElementSibling.value = this.value">
+        <output>{{ cantidad }}</output>
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <!-- Tabla para mostrar los resultados -->
+    <table border="1">
+        <tbody>
+            {% for refaccion in refacciones %}
+                <tr>
+                    <td><img src="{{ refaccion.imagen }}" alt="Imagen" width="100"></td>
+                    <td>{{ refaccion.nombre }}</td>
+                    <td>{{ refaccion.piezas_faltantes }}</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

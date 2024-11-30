@@ -2,8 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from watchwiz.services.services_data2 import actualizar_refaccion, obtener_categorias, obtener_refaccion_por_id, obtener_refacciones
 from watchwiz.forms import CategoriaForms, EditarRefaccionesForms, RefaccionesForms
-from watchwiz.services.firebase_service import registrar_categoria, registrar_refacciones
 from watchwiz.services.delete_services import eliminar_refaccion
+from watchwiz.services.firebase_service import registrar_categoria, registrar_refacciones
 
 def inventario_view(request):
     # Obtener las categorias y los datos de Firebase
@@ -30,15 +30,28 @@ def refacciones_view(request):
         if form.is_valid():
            # Guardar datos en Firestore
            foto = form.cleaned_data['imagen']
+           nombre = form.cleaned_data['nombre']
            categoria=form.cleaned_data['categoria']
            precio = form.cleaned_data['precio']
            medida = form.cleaned_data['medida']
            color = form.cleaned_data['color']
            caracteristicas = form.cleaned_data['caracteristicas']
+           aceptable = form.cleaned_data['aceptable']
            existencia = form.cleaned_data['existencia']
            
-           registrar_refacciones(foto=foto, categoria=categoria, precio=precio, medida=medida,
-                                  color=color, caracteristicas=caracteristicas, existencia=existencia)
+           # Campos opcionales
+           
+           
+           registrar_refacciones(foto=foto,
+                                 nombre=nombre,
+                                 categoria=categoria,
+                                 precio=precio,
+                                 medida=medida,
+                                 color=color,
+                                 caracteristicas=caracteristicas,
+                                 aceptable=aceptable,
+                                 existencia=existencia)
+           
            return redirect('inventario')  # Redirigir a una página de éxito
      else:
             form = RefaccionesForms(categorias_choices = categorias_choices)
@@ -81,11 +94,13 @@ def editar_refaccion_view(request, refaccion_id):
     # Datos iniciales para el formulario
     initial_data = {
         'imagen': refaccion.get('imagen', ''),
+        'nombre': refaccion.get('nombre', ''),
         'categoria': refaccion.get('categoria', ''),
         'precio': refaccion.get('precio', ''),
         'medida': refaccion.get('medida', ''),
         'color': refaccion.get('color', ''),
         'caracteristicas': refaccion.get('caracteristicas', ''),
+        'aceptable': refaccion.get('aceptable', ''),
         'existencia': refaccion.get('existencia', ''),
     }
 
@@ -99,15 +114,17 @@ def editar_refaccion_view(request, refaccion_id):
         if form.is_valid():
             # Recoger los datos del formulario
             foto = form.cleaned_data['imagen']
+            nombre = form.cleaned_data['nombre']
             categoria = form.cleaned_data['categoria']
             precio = form.cleaned_data['precio']
             medida = form.cleaned_data['medida']
             color = form.cleaned_data['color']
             caracteristicas = form.cleaned_data['caracteristicas']
+            aceptable = form.cleaned_data['aceptable']
             existencia = form.cleaned_data['existencia']
             
             # Actualizar la refacción en Firebase
-            actualizar_refaccion(refaccion_id, foto, categoria, precio, medida, color, caracteristicas, existencia)
+            actualizar_refaccion(refaccion_id, foto, nombre, categoria, precio, medida, color, caracteristicas, aceptable, existencia)
             return redirect('inventario')  # Redirige al inventario después de guardar los cambios
     else:
         form = EditarRefaccionesForms(
@@ -123,6 +140,6 @@ def detalles_refaccion_view(request, refaccion_id):
     refaccion = obtener_refaccion_por_id(refaccion_id)  # Aquí debes llamar a tu función para obtener la refacción desde Firebase u otra base de datos
     if not refaccion:
         return render(request, '404.html')  # Página 404 si no se encuentra la refacción
-    return render(request, 'datas_html/detalles_refacciones.html', {'refaccion': refaccion})
+    return render(request, 'details_html/detalles_refacciones.html', {'refaccion': refaccion})
 
 

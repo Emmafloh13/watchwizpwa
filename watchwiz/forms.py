@@ -119,18 +119,20 @@ class TrabajosForms(forms.Form):
 class RefaccionesForms(forms.Form):
      # Campos obligatorios
     imagen = forms.ImageField(label="Imagen", required=True)
+    nombre = forms.CharField(max_length=100, label="Nombre de la pieza", required=True)
     categoria = forms.ChoiceField(label="Categoría", choices=[], required=True)
     precio = forms.DecimalField(max_digits=10, decimal_places=2, label="Precio", required=True)
     medida = forms.CharField(max_length=100, label="Medida", required=True)
     color = forms.CharField(max_length=100, label="Color", required=True)
     caracteristicas = forms.CharField(widget=forms.Textarea, label="Características", required=True)
+    aceptable = forms.IntegerField(label="Cantidad Aceptable", required=True)
     existencia = forms.IntegerField(label="Existencia", required=True)
 
     # Campos opcionales
     tipo = forms.CharField(max_length=100, label="Tipo", required=False)
     longitud = forms.DecimalField(max_digits=10, decimal_places=2, label="Longitud", required=False)
     diametro = forms.DecimalField(max_digits=10, decimal_places=2, label="Diámetro", required=False)
-    tamaño = forms.CharField(max_length=100, label="Tamaño", required=False)
+    tamano = forms.CharField(max_length=100, label="Tamaño", required=False)
     espesor = forms.DecimalField(max_digits=10, decimal_places=2, label="Espesor", required=False)
     numero = forms.IntegerField(label="Número", required=False)
     origen = forms.CharField(max_length=100, label="Origen", required=False)
@@ -162,11 +164,13 @@ class EditarTrabajoForm(forms.Form):
 class EditarRefaccionesForms(forms.Form):
     # Define los campos de tu formulario
     imagen = forms.ImageField(required=False)
+    nombre = forms.CharField(max_length=100)    
     categoria = forms.ChoiceField(choices=[], required=True)
     precio = forms.DecimalField(max_digits=10, decimal_places=2)
     medida = forms.CharField(max_length=100)
     color = forms.CharField(max_length=50)
     caracteristicas = forms.CharField(widget=forms.Textarea)
+    aceptable = forms.IntegerField(required=False)
     existencia = forms.IntegerField()
 
     def __init__(self, *args, **kwargs):

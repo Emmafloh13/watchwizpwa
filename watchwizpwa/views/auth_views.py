@@ -1,8 +1,8 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from watchwiz.forms import LoginForm, RegistroEmpresaForm
-from watchwiz.services.firebase_service import registrar_empresa, validar_usuario
 from watchwiz.services.services_data import obtener_datos_empresa, obtener_trabajos, obtener_trabajos_manana
+from watchwiz.services.firebase_service import registrar_empresa, validar_usuario
 
 
 def registro_view(request):
