@@ -1,0 +1,13 @@
+#image-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+#preview {
+    border-radius: 0.8rem;
+}
+
+.checked {
+    
+}

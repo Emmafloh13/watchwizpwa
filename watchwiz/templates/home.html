@@ -2,51 +2,86 @@
 {% block title %}Tareas{% endblock %}
 
 {% block content %}
-<div class="home-container">
-    <div class = "container mt-4">
-        <h2 class = "text-center mb-4">Trabajos de hoy</h2>
-        <div class = "trabajos-list">
-            {% for trabajo in trabajos %}
-            <div class = "trabajo-card" onclick = "location.href='{% url 'trabajos_data' trabajo.id %}'">
-                    <div class = "trabajo-imagen">
-                        <img src="{{ trabajo.photo }}" alt="Trabajo de {{ trabajo.client_name}}" />
+<!-- Contenedor de las listas -->
+<div class="listas">
+    <!-- Botón izquierdo -->
+    <div id="btn-lft-lista" class="no-mostrar">
+        <i class="fa-solid fa-caret-left"></i>
+    </div>
+    <!-- Cuadro de las listas -->
+    <div class="contenedor1">
+        <!-- Segundo cuadro interno de las listas -->
+        <div id="contenedorRL" class="contenedor2">
+            <!-- Lista de hoy -->
+            <div id="lista-hoy" class="lista-tarea">
+                <span>Trabajos de hoy</span>
+                <!-- contenedor de las tareas -->
+                <div class="contenedor3">
+                    {% for trabajo in trabajos %}
+                    <div class="tarea" onclick="location.href='{% url 'trabajos_data' trabajo.id %}'">
+                        <i class="fa-solid fa-grip-lines"></i>
+                        <div class="img-trabajo">
+                            <img src="{{ trabajo.photo }}" alt="Trabajo de {{ trabajo.client_name }}">
+                        </div>
+                        <div class="tarea-info">
+                            <span class="name"> {{trabajo.client_name}} </span>
+                            <span class="half"> ${{trabajo.service_cost}} </span>
+                            <!-- <span> Aquí debe venir la fecha de entrega la reparación </span> -->
+                            <p> {{trabajo.description}} </p>
+                        </div>
                     </div>
-                    <div class = "trabajo-info">
-                        <h5>{{trabajo.client_name}}</h5>
-                        <p>{{trabajo.description}}</p>
-                        <span class="trabajo-cost">${{trabajo.service_cost}}</span>
-                        <p class="trabajo-status">Estado: {{ trabajo.status }}</p>
-                    </div>
+                    <!-- En el caso de no tener más trabajos -->
+                    {% empty %}
+                    No hay trabajos para hoy
+                    {% endfor %}
                 </div>
-                {% empty %}
-                <p>No hay trabajos para hoy</p>
-                {% endfor %}
             </div>
 
-
-         <!-- Trabajos de mañana -->
-         <h2 class="text-center mt-5 mb-4">Trabajos de mañana</h2>
-         <div class="trabajos-list">
-             {% for trabajo in trabajos_manana %}
-             <div class="trabajo-card">
-                <div class="trabajo-card" onclick="location.href='{% url 'trabajos_data' trabajo.id %}'">
-                    <div class="trabajo-imagen">
-                        <img src="{{ trabajo.photo }}" alt="Trabajo de {{ trabajo.client_name }}" />
+            <!-- Recuerda: trabajos_manana  en el "in" del "for" -->
+            
+            <!-- Lista de mañana -->
+            <div id="lista-man" class="lista-tarea no-ver">
+                <span>Trabajos de mañana</span>
+                <!-- contenedor de las tareas -->
+                <div class="contenedor3">
+                    {% for trabajo in trabajos_manana %}
+                    <div class="tarea" onclick="location.href='{% url 'trabajos_data' trabajo.id %}'">
+                        <i class="fa-solid fa-grip-lines"></i>
+                        <div class="img-trabajo">
+                            <img src="{{ trabajo.photo }}" alt="Trabajo de {{ trabajo.client_name }}">
+                        </div>
+                        <div class="tarea-info">
+                            <span class="name"> {{trabajo.client_name}} </span>
+                            <span class="half"> ${{trabajo.service_cost}} </span>
+                            <!-- <span> Aquí debe venir la fecha de entrega la reparación </span> -->
+                            <p> {{trabajo.description}} </p>
+                        </div>
                     </div>
-                    <div class="trabajo-info">
-                        <h5>{{ trabajo.client_name }}</h5>
-                        <p>{{ trabajo.description }}</p>
-                        <span class="trabajo-cost">${{ trabajo.service_cost }}</span>
-                        <p class="trabajo-status">Estado: {{ trabajo.status }}</p>
-                    </div>
+                    <!-- En el caso de no tener más trabajos -->
+                    {% empty %}
+                    No hay trabajos para hoy
+                    {% endfor %}
                 </div>
-                {% empty %}
-                <p>No hay trabajos del mañana</p>
-                {% endfor %}
             </div>
         </div>
     </div>
+    <!-- Botón derecho -->
+    <div id="btn-rgt-lista" class="mostrar">
+        <i class="fa-solid fa-caret-right"></i>
+    </div>
+</div>
 
+<!-- Contenedor del calendario -->
+<div class="calendario"></div>
+<div id="agregar" class="agregar">
+    <i class="fa-solid fa-clock iconS"></i>
+    <i class="fa-solid fa-circle-plus iconM"></i>
+</div>
+
+<!-- Formulario para registrar el trabajo -->
+
+
+<div class="home-container">
     {{form.status}}
 
     <!-- Formulario para registrar un trabajo -->
