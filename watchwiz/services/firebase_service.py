@@ -125,9 +125,9 @@ def registrar_trabajo(client_name, phone_number, description,
 
 
 
-def registrar_refacciones(foto, categoria, precio, medida, color, caracteristicas, 
-                          existencia, tipo=None, longitud=None, diametro=None, 
-                          tamaño=None, espesor=None, numero=None, origen=None):
+def registrar_refacciones(foto, nombre, categoria, precio, medida, color, caracteristicas,
+                          aceptable, existencia, tipo=None, longitud=None, diametro=None, 
+                          tamano=None, espesor=None, numero=None, origen=None):
     try:
         # Subir foto a Firebase
         imagen_url = subir_imagen(foto) if foto else None
@@ -135,22 +135,24 @@ def registrar_refacciones(foto, categoria, precio, medida, color, caracteristica
         # Datos de la refacción
         refaccion_data = {
             'imagen': imagen_url,
+            'nombre': nombre,
             'categoria': categoria,
             'precio': float(precio),
             'medida': medida,
             'color': color,
             'caracteristicas': caracteristicas,
+            'aceptable': aceptable,
             'existencia': existencia,
             'tipo': tipo,
             'longitud': float(longitud) if longitud else None,
             'diametro': float(diametro) if diametro else None,
-            'tamaño': tamaño,
+            'tamano': tamano,
             'espesor': float(espesor) if espesor else None,
             'numero': numero,
             'origen': origen
         }
 
-        # Remover claves con valores `None` antes de guardar
+        # Remover claves con valores None antes de guardar
         refaccion_data = {k: v for k, v in refaccion_data.items() if v is not None}
 
 
@@ -173,6 +175,3 @@ def registrar_categoria(nombre):
         print(f"Categoría '{nombre}' registrada con éxito")
     except Exception as e:
         print(f"Error al registrar la categoría: {e}")
-
-
-
