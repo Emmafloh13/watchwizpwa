@@ -124,7 +124,7 @@ class RefaccionesForms(forms.Form):
     medida = forms.CharField(max_length=100, label="Medida", required=True)
     color = forms.CharField(max_length=100, label="Color", required=True)
     caracteristicas = forms.CharField(widget=forms.Textarea, label="Características", required=True)
-    existentes = forms.IntegerField(label="Existencia", required=True)
+    existencia = forms.IntegerField(label="Existencia", required=True)
 
     # Campos opcionales
     tipo = forms.CharField(max_length=100, label="Tipo", required=False)
@@ -146,20 +146,35 @@ class CategoriaForms(forms.Form):
     nombre = forms.CharField(max_length=100, required=True, label="Nombre de la categoria")
 
 
-STATUS_CHOICES = [
-    ('en espera', 'en espera'),
-    ('inconveniente', 'Inconveniente'),
-    ('reparado', 'Reparado'),
+ESTADOS_CHOICES = [
+    ('En espera', 'En espera'),
+    ('Inconveniente', 'Inconveniente'),
+    ('Reparado', 'Reparado'),
 ]
 
-class TrabajoDetaForm(forms.Form):
-    client_name = forms.CharField(label='Nombre del Cliente', widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    phone_number = forms.CharField(label='Número Telefónico', widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    description = forms.CharField(label='Descripción', widget=forms.Textarea(attrs={'readonly': 'readonly'}))
-    imagen = forms.URLField(label='Imagen', widget=forms.URLInput(attrs={'readonly': 'readonly'}))
-    service_cost = forms.DecimalField(label='Costo del Servicio', required=True)
-    advance = forms.DecimalField(label='Anticipo', required=False)
-    received_date = forms.DateField(label='Fecha de Recepción', widget=forms.DateInput(attrs={'readonly': 'readonly'}))
-    review_date = forms.DateField(label='Fecha de Revisión', required=True, widget=forms.DateInput())
-    status = forms.ChoiceField(label='Estado', choices=STATUS_CHOICES)
+class EditarTrabajoForm(forms.Form):
+    review_date = forms.DateField(required=False, widget=forms.TextInput(attrs={'type': 'date'}), label= "Fecha de revisión")
+    service_cost = forms.DecimalField(max_digits=10, decimal_places=2, label= "Costo del servicio")
+    advance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, label= "Anticipo")
+    status = forms.ChoiceField(choices = ESTADOS_CHOICES, widget=forms.RadioSelect, label = "Estado")
+
+
+class EditarRefaccionesForms(forms.Form):
+    # Define los campos de tu formulario
+    imagen = forms.ImageField(required=False)
+    categoria = forms.ChoiceField(choices=[], required=True)
+    precio = forms.DecimalField(max_digits=10, decimal_places=2)
+    medida = forms.CharField(max_length=100)
+    color = forms.CharField(max_length=50)
+    caracteristicas = forms.CharField(widget=forms.Textarea)
+    existencia = forms.IntegerField()
+
+    def __init__(self, *args, **kwargs):
+        # Extraer el argumento personalizado `categorias_choices`
+        categorias_choices = kwargs.pop('categorias_choices', [])
+        super().__init__(*args, **kwargs)
+        # Asignar las opciones dinámicamente
+        self.fields['categoria'].choices = categorias_choices
+
+
 

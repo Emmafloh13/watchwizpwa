@@ -1,8 +1,10 @@
-from datetime import datetime
+import decimal
 from firebase_admin import firestore
-from datetime import timedelta
+from datetime import datetime, timedelta, date
+
 
 db = firestore.client()
+
 
 def obtener_datos_empresa(email):
     try:
@@ -82,28 +84,49 @@ def obtener_trabajos_manana():
         print(f"Error al obtener los trabajos de mañana: {e}")
         return []
 
-
-    
-def obtener_categorias():
-     categorias = []
-     try:
-        docs = db.collection('categorias').stream()
-        for doc in docs:
-            categorias.append({'nombre': doc.to_dict().get('nombre', '')})
-     except Exception as e:
-            print(f"Error al obtener las categorías: {e}")
-     return categorias
+def obtener_trabajo(trabajo_id):
+    try:
+        trabajo_ref = db.collection('trabajos').document(trabajo_id).get()
+        if trabajo_ref.exists:
+            return trabajo_ref.to_dict()
+        return None
+    except Exception as e:
+        print(f"Error al obtener trabajo: {e}")
+        return None
 
 
-def obtener_refacciones():
-    db = firestore.client()
-    refacciones = []
-    refacciones_docs = db.collection('refacciones').stream()
-    for doc in refacciones_docs:
-        refaccion = doc.to_dict()
-        refacciones.append({
-            'imagen': refaccion.get('imagen', ''),
-            'categoria': refaccion.get('categoria', '')
-            })
-    return refacciones
-    
+def actualizar_trabajo(trabajo_id, data):
+    try:
+        for key, value in data.items():
+            if isinstance(value, decimal.Decimal):
+                data[key] = float(value)
+            elif isinstance(value, (date, datetime)):
+                data[key] = value.strftime('%Y-%m-%d')  # Asegúrate de que las fechas estén en formato ISO
+            
+        db.collection('trabajos').document(trabajo_id).update(data)
+        print(f"Trabajo {trabajo_id} actualizado correctamente.")
+    except Exception as e:
+        print(f"Error al actualizar trabajo: {e}")
+
+def obtener_trabajos_filtrados(status):
+    try:
+        trabajos_ref = db.collection('trabajos')
+        
+        # Filtrar por estado si se proporciona
+        if status: 
+            trabajos = trabajos = trabajos_ref.where('status', '==', status).stream()
+
+        else: 
+            trabajos = trabajos_ref.stream()
+            
+        trabajos_list = []
+
+        for trabajo in trabajos:
+            trabajo_data = trabajo.to_dict()
+            trabajo_data['id'] = trabajo.id
+            trabajos_list.append(trabajo_data)
+
+        return trabajos_list
+    except Exception as e:
+        print(f"Error al obtener trabajos filtrados por estado: {e}")
+        return []

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="refaccion-container">
+    <h1>Detalles de la Refacción</h1>
+    
+    <div class="refaccion-details">
+        <img src="{{ refaccion.imagen }}" alt="Imagen de {{ refaccion.categoria }}" width="200">
+        <p><strong>Medida:</strong> {{ refaccion.medida }}</p>
+        <p><strong>Precio:</strong> ${{ refaccion.precio }}</p>
+        <p><strong>Categoría:</strong> {{ refaccion.categoria }}</p>
+        <p><strong>Color:</strong> {{ refaccion.color }}</p>
+        <p><strong>Características:</strong> {{ refaccion.caracteristicas }}</p>
+        <p><strong>Existencia:</strong> {{ refaccion.existencia }}</p>
+    
+    </div>
+    
+    <a href="{% url 'inventario' %}"><button>Cerrar</button></a>
+</div>
+{% endblock %}
