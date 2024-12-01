@@ -100,8 +100,13 @@ header {
 .header-icons > div {
     cursor: pointer;
 }
+/* Sombra de los iconos */
 .iconS{
     filter: drop-shadow(0.1rem 0.2rem 0.15rem rgba(0,0,0,.6));
+}
+/* Iconos movibles */
+.iconM {
+    position: absolute;
 }
 div.user-avatar {
     width: 60%;
@@ -177,7 +182,6 @@ main.content {
 }
 .rgt {
     left: -100%;
-    transition: all 0.2s ease-in-out;
 }
 .contenedor3 {
     display: flex;
@@ -248,4 +252,20 @@ main.content {
 }
 .no-ver .half, .no-ver .tarea-info > p {
     font-size: 0.6rem;
+}
+
+/* Estilos para el botón para agregar */
+.agregar {
+    position: absolute;
+    right: 2rem;
+    bottom: 4rem;
+    cursor: pointer;
+    font-size: 4rem;
+    color: #1A85BD;
+}
+.agregar > .iconM {
+    color: #c2e4f5;
+    font-size: 1.5rem;
+    right: 0;
+    bottom: 0;
 }
