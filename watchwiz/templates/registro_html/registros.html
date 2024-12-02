@@ -6,12 +6,14 @@
     {% load static %}
     
     <link rel="stylesheet" href="{% static 'css/p1.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inputFile.css' %}">
     <style>
         .fondoIS{
           background-image: url("{% static 'img/LogoWacthWiz.png' %}");
         }
     </style>
     <script src="{% static 'fontawesome/js/all.js' %}"></script>
+    <script src="{% static 'js/inputFile.js' %}"></script>
     <title>WatchWiz | Registro</title>
 </head>
 <body class="fondoIS">
@@ -24,9 +26,12 @@
 
                 <!-- Caja de inputs junto con la imagen -->
                 <div class="inputR2">
-                    <label for="{{ form.imagen.id_for_label }}" class="inputR">
-                        <i class="fa-regular fa-images"></i>
-                        <span>Sube el "logo" de tu empresa</span>
+                    <label for="{{ form.imagen.id_for_label }}" class="inputR" id="image-label">
+                        <div id="icon">
+                            <i class="fa-regular fa-images"></i>
+                        </div>
+                        <span id="label-text">Sube el "logo" de tu empresa</span>
+                        <img src="#" alt="Vista previa de la imagen" id="preview" style="display: none; width: 100%; height: 100%;">
                     </label>
                     {{ form.imagen }}
     

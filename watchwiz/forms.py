@@ -1,6 +1,5 @@
 # Formulario del Registro de empresas
 from django import forms
-
 # Formulario para el registro de empresas
 class RegistroEmpresaForm(forms.Form):
     imagen = forms.ImageField(
@@ -60,6 +59,14 @@ class RegistroEmpresaForm(forms.Form):
         required=True, 
         label=""
     )
+    
+    # Validación personalizada para el campo 'imagen'
+    def clean_imagen(self):
+        imagen = self.cleaned_data.get('imagen')
+        if imagen and not imagen.content_type in ['image/png', 'image/jpeg', 'image/gif']:
+            raise ValidationError("La imagen debe ser un archivo PNG, JPEG o GIF.")
+        
+        return imagen
 
     #Validacion personalizada para que las contraseñas coincidan
     def clean(self):
