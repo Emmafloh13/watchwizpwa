@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Trabajo</title>
-    <!-- Incluye el CSS de Flatpickr -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
     <h2>Registrar Trabajo</h2>
 
     <!-- Formulario para registrar trabajo -->
@@ -19,6 +11,8 @@
         <button type="button" onclick="window.location.href='{% url 'home' %}'">Cancelar</button>
     
     </form>
+</div>
+{% endblock %}
 
     <!-- Incluye el script de Flatpickr -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -34,5 +28,3 @@
             dateFormat: "Y-m-d", // El formato de fecha que queremos guardar
         });
     </script>
-</body>
-</html>

@@ -27,6 +27,7 @@ def obtener_trabajos():
         
         for trabajo in trabajos:
             trabajo_data = trabajo.to_dict()
+            trabajo_data['id'] = trabajo.id  # ID para cada trabajo
             review_date = trabajo_data.get('review_date')
 
             if review_date:
@@ -41,7 +42,7 @@ def obtener_trabajos():
 
                 # Si el trabajo es igual a la fecha actual se da la lista
                 if review_date == today:
-                    trabajo_data['id'] = trabajo.id  # Agrega el ID para poder identificar cada trabajo
+                    trabajo_data['id'] = trabajo.id  # ID para poder identificar cada trabajo
                     trabajo_data['status'] = trabajo_data.get('status', 'Sin especificar')
                     trabajos_list.append(trabajo_data)
 
@@ -88,8 +89,9 @@ def obtener_trabajo(trabajo_id):
     try:
         trabajo_ref = db.collection('trabajos').document(trabajo_id).get()
         if trabajo_ref.exists:
-            return trabajo_ref.to_dict()
-        return None
+            trabajo = trabajo_ref.to_dict()
+            trabajo['id'] = trabajo_id  # Agrega el ID
+        return trabajo
     except Exception as e:
         print(f"Error al obtener trabajo: {e}")
         return None

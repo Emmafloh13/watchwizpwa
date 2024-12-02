@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from firebase_admin import firestore
 from watchwiz.services.firebase_service import subir_imagen
 
@@ -94,4 +95,38 @@ def filtrar_refacciones(cantidad):
     except Exception as e:
         print(f"Error al obtener las refacciones: {e}")
     return refacciones 
+
+
+def guardar_entrega(trabajo_data):
+        try:
+             # Guardar la fecha bien en firebase
+             for key, value in trabajo_data.items():
+                  trabajo_data[key] = convertir_fecha_a_datetime(value)
+                       
+             # Guardar los datos de trabajos en la nueva colección 
+             db.collection('historial').add(trabajo_data)
+             print(f"Trabajo entregado correctamente: {trabajo_data['client_name']}")
+             
+             # Funcion de eliminarla de la coleccion de trabajos
+             trabajo_id = trabajo_data.get('trabajo_id')
+             
+             if trabajo_id:
+                 db.collection('trabajos').document(trabajo_id).delete()
+                 print(f"Trabajo eliminado correctamente de la coleccion: {trabajo_id}")
+             else:
+                 print("No se encontró el ID del trabajo para eliminar.")
+                
+        except Exception as e:
+            print(f"Error al guardar la entrega: {e}")
+
+
+def convertir_fecha_a_datetime(fecha):
+    # Si es una instancia de datetime.date, convertimos a datetime con hora mínima (00:00:00)
+    if isinstance(fecha, date) and not isinstance(fecha, datetime):
+        return datetime.combine(fecha, datetime.min.time())
+    elif isinstance(fecha, datetime):  # Si ya es un datetime, lo dejamos tal cual
+        return fecha
+    return fecha  # Si no es una fecha, devolvemos el valor tal cual
+
+
 
