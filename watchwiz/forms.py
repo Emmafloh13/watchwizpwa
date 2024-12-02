@@ -105,8 +105,8 @@ class TrabajosForms(forms.Form):
     service_cost = forms.DecimalField(max_digits=10, decimal_places=2, label= "Costo del servicio")
     advance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, label= "Anticipo")
     # Campo de fecha por lo minetras
-    received_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'text', 'id': 'received_date'}), label="Fecha de recepción")
-    review_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'text', 'id': 'review_date'}), label="Fecha de revisión")
+    received_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'id': 'received_date'}), label="Fecha de recepción")
+    review_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'id': 'review_date'}), label="Fecha de revisión")
     status = forms.CharField(initial="En espera", widget=forms.HiddenInput(), required=False)
 
     def __init__(self, *args, **kwargs):

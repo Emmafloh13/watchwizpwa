@@ -27,7 +27,6 @@ def registro_trabajos(request):
 
             # Subir el trabajo en la BD
             registrar_trabajo(client_name, phone_number, description, imagen, service_cost, advance, received_date, review_date, status) 
-
             return redirect('home')
     else:
         form = TrabajosForms()

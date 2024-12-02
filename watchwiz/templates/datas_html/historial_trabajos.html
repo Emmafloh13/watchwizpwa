@@ -14,8 +14,7 @@
     
     <div class = "trabajos-container">
         {% for trabajo in trabajos %}
-        <div class = "trabajo-card" onclick = "location.href='{% url 'trabajos_data' trabajo.id %}'">
-        <div class="trabajo-card">
+        <div class="trabajo-card" onclick="location.href='{% url 'trabajos_data' trabajo.id %}'">
             <img src="{{ trabajo.photo }}" alt="Imagen del trabajo" width="100">
             <div>
                 <p><strong>Cliente:</strong> {{ trabajo.client_name }}</p>
