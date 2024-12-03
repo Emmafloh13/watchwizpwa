@@ -79,7 +79,6 @@ class RegistroEmpresaForm(forms.Form):
 
         return cleaned_data
 
-
 # Formulario para la validacion del login
 
 class LoginForm(forms.Form):
