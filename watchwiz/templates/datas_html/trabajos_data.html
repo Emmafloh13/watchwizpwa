@@ -17,7 +17,7 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="{% url 'home' %}"> <button class="categoria-boton">Cancelar</button></a>
+        <a href="{% url 'inventario' %}"> <button class="categoria-boton">Cancelar</button></a>
         <button type="submit" name="entregar" class="categoria-boton">Entregar</button>
     </form>
 </div>

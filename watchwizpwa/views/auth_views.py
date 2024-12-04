@@ -50,6 +50,7 @@ def login_view(request):
             else:
                  # Si las credenciales sson incorrectaar que se muestre el mensaje
                  messages.error(request, 'Credenciales inválidas. Inténtalo de nuevo')
+                 return render(request, 'auth_html/login.html', {'form': form})
         else:
              return render(request, 'auth_html/login.html', {'form': form})
      else:
