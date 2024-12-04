@@ -40,6 +40,12 @@
     <div class = "trabajo-card" onclick = "location.href='{% url 'trabajos_data' trabajo.id %}'">
         <div class="img-card">
             <img src="{{ trabajo.photo }}" alt="Imagen del trabajo" width="100">
+            <div>
+                <p><strong>Cliente:</strong> {{ trabajo.client_name }}</p>
+                <p><strong>Fecha de Recepción:</strong> {{ trabajo.received_date }}</p>
+                <p><strong>Costo:</strong> {{ trabajo.service_cost }}</p>
+                <p><strong>Descripción:</strong> {{ trabajo.description }}</p>
+            </div>
         </div>
         <span class="name">
             {{ trabajo.client_name }}
