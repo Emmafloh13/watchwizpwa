@@ -175,3 +175,8 @@ def registrar_categoria(nombre):
         print(f"Categoría '{nombre}' registrada con éxito")
     except Exception as e:
         print(f"Error al registrar la categoría: {e}")
+
+def get_firestore_client():
+    if not firebase_admin._apps:
+        firebase_admin.initialize_app()
+    return firestore.client()

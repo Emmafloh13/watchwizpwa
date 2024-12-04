@@ -20,3 +20,43 @@
         {% endif %}
     </div>
 </div>
+
+<!--Resultados-->
+<div id="resultados"></div>
+
+<!--Scrip para el manejo de las culsultas-->
+<script>
+    document.querySelector('.search-bar button').addEventListener('click', function(){
+        const query = document.querySelector('.search-bar input').value;
+
+        if (query){
+            fetch(`/buscar?q=${encodeURIComponent(query)}`)
+                .then(response => response.json()
+                .then(data => {
+                    if (data.resultados){
+                        mostrarResultados(data.resultados);
+                    }else{
+                        alert('No se encontraron resultados');
+                    }
+                })
+                .catch(error => console.error('Error en la busqueda:', error));
+            }else{
+                alert('Por favor de ingesar un termino',)
+            }
+        });
+        // Mostrar los resultados en el frontend
+        function mostrarResultados(resultados) {
+            const contenedorResultados = document.getElementById('resultados');
+            contenedorResultados.innerHTML = ''; // Limpiar resultados previos
+            resultados.forEach(resultado => {
+                const item = document.createElement('div');
+                item.innerHTML = `
+                <strong>Colección:</strong> ${resultado.coleccion}<br>
+                <strong>ID Documento:</strong> ${resultado.id_documento}<br>
+                <strong>Datos:</strong> ${JSON.stringify(resultado.data)}<br><hr>
+            `;
+            contenedorResultados.appendChild(item);
+        });
+    }
+</script>
+

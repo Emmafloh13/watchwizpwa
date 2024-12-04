@@ -1,13 +1,18 @@
 from datetime import date, datetime
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from watchwiz.services.services_data import actualizar_trabajo, obtener_trabajo
+from watchwiz.services.services_data import actualizar_trabajo, obtener_datos_empresa, obtener_trabajo
 from watchwiz.forms import EditarTrabajoForm
 from watchwiz.services.services_data2 import guardar_entrega
 
 def trabajo_detail_view(request, trabajo_id):
     if not request.session.get('authenticated'):
         return redirect('login')
+
+    #Obtener imagen
+    email = request.session.get('user_email')
+    empresa_data = obtener_datos_empresa(email)
+    imagen_url = empresa_data.get('imagen') if empresa_data else None
 
     # Obtener los datos del trabajo desde Firebase
     trabajo = obtener_trabajo(trabajo_id)
@@ -62,4 +67,5 @@ def trabajo_detail_view(request, trabajo_id):
                   {'form': form,
                    'trabajo': trabajo,
                    'datos_no_editables': datos_no_editables,
+                   'imagen_url': imagen_url
                    })

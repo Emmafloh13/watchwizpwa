@@ -5,14 +5,14 @@ from watchwiz.services.firebase_service import subir_imagen
 db = firestore.client()
 
 def obtener_categorias():
-     categorias = []
-     try:
+    categorias = []
+    try:
         docs = db.collection('categorias').stream()
         for doc in docs:
             categorias.append({'nombre': doc.to_dict().get('nombre', '')})
-     except Exception as e:
-            print(f"Error al obtener las categorías: {e}")
-     return categorias
+    except Exception as e:
+        print(f"Error al obtener las categorías: {e}")
+    return categorias
 
 
 def obtener_refacciones():
@@ -127,6 +127,65 @@ def convertir_fecha_a_datetime(fecha):
     elif isinstance(fecha, datetime):  # Si ya es un datetime, lo dejamos tal cual
         return fecha
     return fecha  # Si no es una fecha, devolvemos el valor tal cual
+
+
+def obtener_trabajos_historial():
+    try:
+        trabajos = []
+        docs = db.collection('historial').stream()
+        for doc in docs:
+            trabajo = doc.to_dict()
+            trabajos.append({
+                'id': doc.id,
+                'photo': trabajo.get('photo',''),
+                'client_name': trabajo.get('client_name',''),
+                'received_date': trabajo.get('received_date',''),
+                'service_cost': trabajo.get('service_cost', ''),
+                'description': trabajo.get('description', ''),
+            })
+        return trabajos
+    except Exception as e:
+        print(f"Error al obtener los trabajos: {e}")
+        return []
+    
+def guardar_compras(refacciones):
+    try:
+        if not refacciones:
+            print("No hay refacciones para guardar.")
+            return
+
+        for refaccion in refacciones:
+            ref_doc = db.collection('refacciones').document(refaccion['id']).get()
+            if not ref_doc.exists:
+                print(f"La refacción con ID {refaccion['id']} no existe en la base de datos.")
+                continue
+
+            # Guardar en la colección de 'compras'
+            db.collection('compras').add({
+                'imagen': refaccion['imagen'],
+                'nombre': refaccion['nombre'],
+                'piezas_faltantes': refaccion['piezas_faltantes'],
+            })
+        print("Refacciones guardadas en la colección 'compras'.")
+    except Exception as e:
+        print(f"Error al guardar las compras: {e}")
+
+
+def obtener_compras():
+    compras = []
+    try:
+        docs = db.collection('compras').stream()
+        for doc in docs:
+            compra = doc.to_dict()
+            compras.append({
+                'id': doc.id,
+                'imagen': compra.get('imagen', ''),
+                'nombre': compra.get('nombre', ''),
+                'piezas_faltantes': compra.get('piezas_faltantes', 0),
+            })
+    except Exception as e:
+        print(f"Error al obtener las compras: {e}")
+    return compras
 
 
 
