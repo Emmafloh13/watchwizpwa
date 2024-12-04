@@ -64,7 +64,7 @@ class RegistroEmpresaForm(forms.Form):
     def clean_imagen(self):
         imagen = self.cleaned_data.get('imagen')
         if imagen and not imagen.content_type in ['image/png', 'image/jpeg', 'image/gif']:
-            raise ValidationError("La imagen debe ser un archivo PNG, JPEG o GIF.")
+            raise forms.ValidationError("La imagen debe ser un archivo PNG, JPEG o GIF.")
         
         return imagen
 
