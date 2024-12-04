@@ -1,3 +1,11 @@
+<!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.2.0/dist/fullcalendar.min.css" rel="stylesheet" />
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.2.0/dist/fullcalendar.min.js"></script>
+
+
 {% extends 'base.html' %}
 {% block title %}Tareas{% endblock %}
 
@@ -25,7 +33,7 @@
                         </div>
                         <div class="tarea-info">
                             <span class="name"> {{trabajo.client_name}} </span>
-                            <span class="half"> ${{trabajo.service_cost}} </span>
+                            <span class="half"> ${{trabajo.service_cost|floatformat:0}} </span>
                             <span class="half"> {{trabajo.received_date}}</span>
                             <!-- <span> Aquí debe venir la fecha de entrega la reparación </span> -->
                             <p> {{trabajo.description}} </p>
@@ -92,3 +100,8 @@
     </form>
 </div>
 {% endblock %}
+
+
+<!-- Incluir tu archivo JS personalizado -->
+{% load static %}
+<script src="{% static 'js/calendario.js' %}"></script>
