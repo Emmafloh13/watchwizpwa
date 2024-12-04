@@ -17,9 +17,6 @@ venv.bak/
 *.pyc
 *.pyo
 *.pyd
-*.db
-*.sqlite3
-db.sqlite3
 
 # Local environment settings (e.g., if you have a `.env` file for environment variables)
 .env
