@@ -3,8 +3,9 @@
 <div class="filt_refaccion-container">
     <h1>Lista de compras</h1>
 
-    <!-- Input tipo rango -->
+    <!-- Filtrar refacciones -->
     <form method="get" action="">
+        {% csrf_token %}
         <label for="cantidad">Selecciona la cantidad:</label>
         <input type="range" id="cantidad" name="cantidad" min="0" max="100" value="{{ cantidad }}" 
                oninput="this.nextElementSibling.value = this.value">
@@ -12,18 +13,55 @@
         <button type="submit">Filtrar</button>
     </form>
 
-    <!-- Tabla para mostrar los resultados -->
-    <table border="1">
-        <tbody>
-            {% for refaccion in refacciones %}
+    <!-- Tabla de refacciones -->
+    <form method="post" action="">
+        {% csrf_token %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Piezas faltantes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for refaccion in refacciones %}
                 <tr>
                     <td><img src="{{ refaccion.imagen }}" alt="Imagen" width="100"></td>
                     <td>{{ refaccion.nombre }}</td>
                     <td>{{ refaccion.piezas_faltantes }}</td>
-
+                    <td><input type="checkbox" name="refacciones_seleccionadas" value="{{ refaccion.id }}"></td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit">Agregar a la lista</button>
+    </form>
+
+    <!-- Lista de compras -->
+    <h2>Compras realizadas</h2>
+    <form method="post" action="">
+        {% csrf_token %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Piezas faltantes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for compra in compras %}
+                <tr>
+                    <td><img src="{{ compra.imagen }}" alt="Imagen" width="100"></td>
+                    <td>{{ compra.nombre }}</td>
+                    <td>{{ compra.piezas_faltantes }}</td>
+                    <td><input type="checkbox" name="compras_seleccionadas" value="{{ compra.id }}"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" name="accion" value="eliminar_compras">Guardar</button>
+    </form>
 </div>
 {% endblock %}
