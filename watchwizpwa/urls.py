@@ -33,7 +33,8 @@ urlpatterns = [
     # VISTA DE LA LISTA DE COMPRAS
     path('filtrar_refacciones/', filtrar_refacciones_view, name='filtrar_refacciones'),
     # VISTA DE BUSQUEDA
-    path('buscar', busqueda_global, name='busqueda_global')
+    path('buscar', busqueda_global, name='busqueda_global'),
+
 
 ]
 
