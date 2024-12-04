@@ -265,12 +265,25 @@ main.content {
     cursor: pointer;
     font-size: 4rem;
     color: #1A85BD;
+    text-decoration: none;
 }
 .agregar > .iconM {
     color: #c2e4f5;
     font-size: 1.5rem;
     right: 0;
     bottom: 0;
+    text-align: center;
+}
+.agregar > span {
+    position: absolute;
+    font-size: 0.8rem;
+    text-shadow: 1px 1px 5px #000;
+    left: 0;
+    bottom: -2rem;
+    text-align: center;
+}
+.agregar2 {
+    bottom: 11rem;
 }
 
 /* Estilos para la barra de estados */
@@ -292,6 +305,8 @@ main.content {
     color: rgba(0,0,0,.8);
     font-weight: bold;
     outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
 .filtrosET > button > span {
     margin-left: 1rem;
@@ -330,9 +345,9 @@ main.content {
     border-radius: 0.5rem;
     padding: 0.8rem;
     font-size: 0.8rem;
-    margin-bottom: 1rem;
     width: 15%;
     min-width: 165px;
+    cursor: pointer;
 }
 .img-card {
     width: 100%;
@@ -359,4 +374,239 @@ main.content {
     line-height: 1.5em;
     max-height: 4.5em;
     text-overflow: ellipsis;
+}
+
+/* Filtros por categoría del inventario */
+.filtrosI {
+    display: flex;
+    width: 100%;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    align-items: center;
+    padding: 0.4rem 1rem;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 0.2rem;
+}
+.filtrosI > a {
+    text-decoration: none;
+    background: #1A85BD;
+    color: #fff;
+    border-radius: 1rem;
+    padding: 0.4rem 0.8rem;
+    transition: all 0.2s ease-in;
+}
+.filtrosI > a:hover {
+    color: #1A85BD;
+    background: #fff;
+}
+.inventario {
+    background: linear-gradient(0deg, #1A2980, #26D0CE);
+    width: 92%;
+    border-radius: 1.5rem;
+    box-shadow: 2px 5px 10px rgba(0,0,0,.5);
+    padding: 0 0.5rem;
+    overflow: auto;
+    height: 84%;
+    margin-bottom: 1rem;
+}
+.inventario > table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+.inventario > table > thead {
+    border-bottom: 0.2rem solid #fff;
+    height: 2rem;
+}
+.list-guardar {
+    background: #336700;
+}
+.list-guardar > button {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 1.4rem;
+    color: #fff;
+    height: 100%;
+    cursor: pointer;
+}
+.inventario > table > thead th {
+    font-weight: normal;
+}
+.inventario > table > tbody tr {
+    background: #238b00;
+    color: #C2E4F5;
+    cursor: pointer;
+}
+.img-list {
+    padding: 0.5rem;
+}
+.img-list > div {
+    width: 4rem;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    margin: auto;
+    border-radius: 0.4rem;
+}
+.img-list > div > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.opc-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 5rem;
+    align-items: center;
+}
+.opc-list > a, .opc-list > div {
+    padding: 0.4rem;
+    color: #fff;
+    border-radius: 0.2rem;
+}
+.opc-list > a{
+    background: #174763;
+}
+.opc-list > div {
+    background: #F10000;
+}
+
+.centro {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.formularioG {
+    display: flex;
+    width: 60%;
+    height: 90%;
+    flex-flow: wrap;
+    color: #fff;
+}
+.inputsR1 {
+    display: flex;
+    flex-flow: wrap;
+    width: 45%;
+    height: 72%;
+    padding: 0 0.8rem;
+    justify-content: space-between;
+}
+.inputsR1 > .half {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+}
+.inputsR1 > div, .inputsR1 textarea {
+    width: 100%;
+}
+.inputsR1 input, .inputsR1 textarea {
+    border: none;
+    border-radius: 1rem;
+    outline: none;
+    padding: 0.4rem 1rem;
+    background: rgba(255, 255, 255, .8);
+    margin-top: 0.4rem;
+}
+.formularioG label {
+    font-weight: bold;
+}
+.dinero {
+    width: 20%;
+    height: 68%;
+    max-height: 290px;
+    background: #ADDB97;
+    border-radius: 1rem;
+    color: #000;
+    overflow: hidden;
+}
+.dinero > span {
+    display: block;
+    text-align: center;
+    background: #428400;
+    padding: 0.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+.dinero > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 85%;
+    padding: 0 0.5rem;
+    justify-content: space-around;
+}
+.dinero input {
+    background: rgba(0, 0, 0, .8);
+    border: none;
+    outline: none;
+    border-radius: 1rem;
+    padding: 0.4rem 0.8rem;
+    color: #fff;
+}
+.formularioG input[type="file"] {
+    display: none;
+}
+.formularioG label[for="id_imagen"]{
+    width: 35%;
+    padding: 0 0.8rem;
+    position: relative;
+}
+.formularioG label .icon {
+    display: flex;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.4);
+    width: 100%;
+    aspect-ratio: 7/9;
+    border-radius: 1rem;
+    border: 0.3rem dashed;
+    align-items: center;
+    font-size: 5rem;
+    cursor: pointer;
+    box-shadow: 0.2rem 0.2rem 0.8rem rgba(0, 0, 0, .8);
+}
+.formularioG label > span {
+    position: absolute;
+    width: 75%;
+    text-align: center;
+    bottom: 25%;
+    left: 1.6rem;
+}
+.fechas {
+    width: 100%;
+    display: flex;
+}
+.btn-form {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+.btn-form button {
+    padding: 0.2rem 1.5rem;
+    border-radius: 2rem;
+    border: 0.2rem solid #fff;
+    color: #fff;
+    outline: none;
+    box-shadow: 0.2rem 0.2rem 0.6rem rgba(0, 0, 0, .8);
+    transition: all 0.2s ease-in;
+}
+.btn-form button:active {
+    box-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 1);
+}
+.cancelar {
+    background: #8B0000;
+}
+.cancelar:active {
+    background: #dd0000;
+}
+.aceptar {
+    background: #336700;
+}
+.aceptar:active {
+    background: #33aa00;
 }
