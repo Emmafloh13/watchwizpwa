@@ -79,7 +79,6 @@ class RegistroEmpresaForm(forms.Form):
 
         return cleaned_data
 
-
 # Formulario para la validacion del login
 
 class LoginForm(forms.Form):
@@ -103,18 +102,49 @@ class LoginForm(forms.Form):
 
 class TrabajosForms(forms.Form):
     client_name = forms.CharField(
-        max_length=250,
-        label="Nombre del cliente",
+        label="",
     )
-    phone_number = forms.CharField(max_length=20, label= "Número de teléfono")
-    description = forms.CharField(widget=forms.Textarea, label="Descripción")
-    imagen = forms.ImageField(required=False, label="Foto")
-    service_cost = forms.DecimalField(max_digits=10, decimal_places=2, label= "Costo del servicio")
-    advance = forms.DecimalField(max_digits=10, decimal_places=2, required=False, label= "Anticipo")
-    # Campo de fecha por lo minetras
-    received_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'id': 'received_date'}), label="Fecha de recepción")
-    review_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'id': 'review_date'}), label="Fecha de revisión")
-    status = forms.CharField(initial="En espera", widget=forms.HiddenInput(), required=False)
+    phone_number = forms.CharField(
+        label= ""
+    )
+    description = forms.CharField(
+        widget=forms.Textarea,
+        label=""
+    )
+    imagen = forms.ImageField(
+        label=""
+    )
+    service_cost = forms.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        label= ""
+    )
+    advance = forms.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        required=False,
+        label= ""
+    )
+    # Campo de fecha por lo mientras
+    received_date = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'id': 'received_date'
+        }),
+        label=""
+    )
+    review_date = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'id': 'review_date'
+        }),
+        label=""
+    )
+    status = forms.CharField(
+        initial="En espera",
+        widget=forms.HiddenInput(),
+        required=False
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

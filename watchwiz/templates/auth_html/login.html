@@ -6,15 +6,12 @@
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/p1.css' %}">
 
-  <style>
-    .fondoIS{
-      background-image: url("{% static 'img/LogoWacthWiz.png' %}");
-    }
-  </style>
-
   <title>WatchWiz | Iniciar Sesión</title>
 </head>
-<body class="fondoIS">
+<body>
+  <div class="fondoIS">
+    <img src="{% static 'img/LogoWacthWiz.png' %}" alt="WatchWiz">
+  </div>
   <main>
     <!-- Formulario para iniciar Sesión -->
     <form class="formularioIS" method="POST" action="{%url 'login' %}">

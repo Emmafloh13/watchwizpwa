@@ -69,7 +69,7 @@
                     </div>
                     <!-- En el caso de no tener más trabajos -->
                     {% empty %}
-                    No hay trabajos para hoy
+                    No hay trabajos para mañana
                     {% endfor %}
                 </div>
             </div>
@@ -84,23 +84,18 @@
 
 <!-- Contenedor del calendario -->
 <div class="calendario"></div>
-<div id="agregar" class="agregar">
+
+<!-- Botón para poder registrar algún trabajo nuevo -->
+<a href="{% url 'registro_trabajos' %}" id="agregar" class="agregar">
     <i class="fa-solid fa-clock iconS"></i>
     <i class="fa-solid fa-circle-plus iconM"></i>
-</div>
+    <span>Agregar Trabajo</span>
+</a>
 
 <!-- Formulario para registrar el trabajo -->
 
 
 <div class="home-container">
-    {{form.status}}
-
-    <!-- Formulario para registrar un trabajo -->
-    <form method="POST" action="{% url 'registro_trabajos' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrar Trabajo</button>
-    </form>
 
     <!-- Formulario para cerrar sesión -->
     <form method="POST" action="{% url 'login' %}">

@@ -1,58 +1,83 @@
 {% extends 'base.html' %}
+
+{% block title %}Inventario{% endblock %}
+
 {% block content %}
-<div class="historial_container">
-    <h1>Inventario</h1>
-    <a href="{% url 'registrar_categoria' %}"><button class="categoria-boton">Nueva Categoría</button></a>
-    <a href="{% url 'refacciones' %}"><button class="categoria-boton">Nueva Refacción</button></a>
+<!-- Botones para filtrar las piezas del inventario -->
+<div class="filtrosI">
+    <!-- Botón de todos -->
+    <a href="{% url 'inventario' %}">Todas</a>
+    {% for categoria in categorias %}
+    <!-- Botón de {{ categoria.nombre }} -->
+    <a href="{% url 'inventario' %}?categoria={{ categoria.nombre }}">
+        {{ categoria.nombre }}
+    </a>
+    {% endfor %}
+</div>
 
-    <div>
-        <a href="{% url 'inventario' %}">
-            <button class="categoria-boton">Todas</button>
-        </a>
-        {% for categoria in categorias %}
-            <a href="{% url 'inventario' %}?categoria={{ categoria.nombre }}">
-                <button class="categoria-boton">{{ categoria.nombre }}</button>
-            </a>
-        {% endfor %}
-    </div>
+<!-- Tabla del inventario -->
+<div class="inventario">
+    <table>
+        <!-- Header de la tabla -->
+        <thead>
+            <tr>
+                <!-- Nombre de cada celda de la tabla -->
+                <th>Imagen</th>
+                <th>Nombre de la pieza</th>
+                <th>Categoría</th>
+                <th>Color</th>
+                <th>Existencia</th>
+                <th>Medida</th>
+                <th>Precio</th>
+                <th class="list-guardar">
+                    <button>
+                        <i class="fa-solid fa-floppy-disk"></i>
+                    </button>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="lista-inv">
+            {% if refacciones %}
+            {% for refaccion in refacciones %}
+            <tr onclick="window.location.href='{% url 'detalles_refacciones' refaccion.id %}'">
+                <td class="img-list">
+                    <div>
+                        <img src="{{ refaccion.imagen }}" alt="Imagen de {{ refaccion.categoria }}">
+                    </div>
+                </td>
+                <td>{{ refaccion.nombre }}</td>
+                <td> {{ refaccion.categoria }} </td>
+                <td> {{refaccion.color}} </td>
+                <td> {{refaccion.existencia}} </td>
+                <td> {{refaccion.media}} </td>
+                <td> ${{refaccion.precio}} </td>
+                <td class="opc-list">
+                    <a href="{% url 'editar_refaccion' refaccion.id %}">
+                        <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <div class="btn-delete" data-id="{{ refaccion.id }}">
+                        <i class="fa-solid fa-trash"></i>
+                    </div>
+                </td>
+              </tr>
+            {% endfor %}
+            {% else %}
+            No hay refacciones para esta categoría.
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+<!-- Botón para poder agregar alguna categoría nueva -->
+<a href="{% url 'registrar_categoria' %}" id="agregar" class="agregar agregar2">
+    <i class="fa-solid fa-layer-group iconS"></i>
+    <i class="fa-solid fa-circle-plus iconM"></i>
+    <span>Agregar Categoría</span>
+</a>
 
-    <div>
-        {% if refacciones %}
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Nombre de la pieza</th>
-                        <th>Categoria</th>
-                        <th>Características</th>
-                        <th>Color</th>
-                        <th>Existencia</th>
-                        <th>Medida</th>
-                        <th>Precio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for refaccion in refacciones %}
-                    <tr onclick="window.location.href='{% url 'detalles_refacciones' refaccion.id %}'">
-                      <td><img src="{{ refaccion.imagen }}" alt="Imagen de {{ refaccion.categoria }}" width="100"></td>
-                      <td>{{ refaccion.nombre }}</td>
-                      <td>{{ refaccion.categoria }}</td>
-                      <td>{{ refaccion.caracteristicas }}</td>
-                      <td>{{ refaccion.color }}</td>
-                      <td>{{ refaccion.existencia }}</td>
-                      <td>{{ refaccion.medida }}</td>
-                      <td>${{ refaccion.precio }}</td>
-                      <td>
-                        <a href="{% url 'editar_refaccion' refaccion.id %}"><button>Editar</button></a>
-                        <button class="delete-btn" data-id="{{ refaccion.id }}">Eliminar</button>
-                      </td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-                {% else %}
-                <p>No hay refacciones con esta categoría.</p>
-                {% endif %}
-              </div>
-            </div>
+<!-- Botón para poder registrar alguna pieza nuevo -->
+<a href="{% url 'refacciones' %}" id="agregar" class="agregar">
+    <i class="fa-solid fa-microchip iconS"></i>
+    <i class="fa-solid fa-circle-plus iconM"></i>
+    <span>Agregar Refacción</span>
+</a>
 {% endblock %}
