@@ -71,7 +71,7 @@ def home_view(request):
     email = request.session.get('user_email')
     empresa_data = obtener_datos_empresa(email)
     imagen_url = empresa_data.get('imagen') if empresa_data else None
-
+    
     # Obtener trabajos del día
     try:
          trabajos = obtener_trabajos()
@@ -84,11 +84,14 @@ def home_view(request):
     context = {
         'imagen_url': imagen_url,
         'empresa_data': empresa_data,
-        'trabajos': trabajos,  # Pasamos los trabajos a la plantilla
-        'trabajos_manana': trabajos_manana,  # Pasamos los trabajos de mañana a la plantilla
+        'trabajos': trabajos,  # Datos de trabajos
+        'trabajos_manana': trabajos_manana,  # Datos de trabajos de mañana
     }
     return render(request, 'home.html', context)
 
 
 def principal_view(request):
         return render(request, 'index.html')
+
+
+
