@@ -75,4 +75,5 @@ docker-compose.override.yml
 
 #Archivo clave JSON
 watchwiz_clave.json
+
 db.sqlite3

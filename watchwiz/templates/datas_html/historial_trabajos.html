@@ -1,32 +1,61 @@
 {% extends 'base.html' %}
+
+{% block title %} Historial de Trabajos {% endblock %}
+
 {% block content %}
+<!-- Botones de filtro -->
+<form action="{% url 'historial_trabajos' %}" method="get" class="filtrosET">
+    <!-- Botón de todos los trabajos -->
+    <button type="submit" name="status" value="" class="todos">
+        <i class="fa-solid fa-globe"></i>
+        <span>Todos</span>
+    </button>
+    <!-- Botón de Reparado -->
+    <button type="submit" name="status" value="Reparado" class="repar">
+        <i class="fa-solid fa-face-laugh-beam"></i>
+        <span>Reparado</span>
+    </button>
+    <!-- Botón de Inconveniente -->
+    <button type="submit" name="status" value="Inconveniente" class="incon">
+        <i class="fa-solid fa-face-dizzy"></i>
+        <span>Inconveniente</span>
+    </button>
+    <!-- Botón de En Espera -->
+    <button type="submit" name="status" value="En espera" class="esper">
+        <i class="fa-solid fa-hourglass-half"></i>
+        <span>En espera</span>
+    </button>
+    <!-- Botón de Entregado -->
+    <button type="submit" name="status" value="Entregado" class="entre">
+        <i class="fa-solid fa-clipboard-check"></i>
+        <span>Entregado</span>
+    </button>
+</form>
+
+
+
 <div class="historial_container">
-
-    <h1>Historial de Trabajos</h1>
-
-    <!-- Botones de filtrado -->
-    <form method="get" action="{% url 'historial_trabajos' %}">
-        <button type="submit" name="status" value="En espera">En espera</button>
-        <button type="submit" name="status" value="Inconveniente">Inconveniente</button>
-        <button type="submit" name="status" value="Reparado">Reparado</button>
-        <button type="submit" name="status" value="">Entregado</button>
-    </form>
-    
-    <div class = "trabajos-container">
-        {% for trabajo in trabajos %}
-        <div class="trabajo-card" onclick="location.href='{% url 'trabajos_data' trabajo.id %}'">
+    <!-- Generador de las tarjetas que visualizarán los trabajos -->
+    {% for trabajo in trabajos %}
+    <div class = "trabajo-card" onclick = "location.href='{% url 'trabajos_data' trabajo.id %}'">
+        <div class="img-card">
             <img src="{{ trabajo.photo }}" alt="Imagen del trabajo" width="100">
-            <div>
-                <p><strong>Cliente:</strong> {{ trabajo.client_name }}</p>
-                <p><strong>Fecha de Recepción:</strong> {{ trabajo.received_date }}</p>
-                <p><strong>Costo:</strong> {{ trabajo.service_cost|floatformat:0 }}</p>
-                <p><strong>Descripción:</strong> {{ trabajo.description }}</p>
-            </div>
         </div>
-        {% endfor %}
-        {% if trabajos|length == 0 %}
-        <p>No se encontraron trabajos.</p>
-        {% endif %}
+        <span class="name">
+            {{ trabajo.client_name }}
+        </span>
+        <span>
+            ${{ trabajo.service_cost }}
+        </span>
+        <span>
+            {{ trabajo.received_date }}
+        </span>
+        <p> {{trabajo.description}} </p>
     </div>
+
+    {% endfor %}
+    {% if trabajos|length == 0 %}
+    <p>No se encontraron trabajos.</p>
+    {% endif %}
 </body>
 {% endblock %}
